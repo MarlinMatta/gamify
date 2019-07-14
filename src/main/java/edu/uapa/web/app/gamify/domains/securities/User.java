@@ -1,36 +1,61 @@
 package edu.uapa.web.app.gamify.domains.securities;
 
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
-import edu.uapa.web.app.gamify.models.enums.UserType;
+import edu.utesa.lib.models.dtos.security.UserDto;
+import edu.utesa.lib.models.enums.Language;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity(name = "users")
 public class User extends Auditable {
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String userName;
-
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
-
     @Column(nullable = false)
     private String password;
-
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
-    private UserType type;
+    private Language language;
+    private Boolean isAdmin = false;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(name = "user_permissions", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    private Set<Permission> permissions;
 
-    public User() {
+    public UserDto toDto() {
+        var dto = new UserDto();
+        dto.setId(getId());
+        dto.setNickName(userName);
+        dto.setPassword(password);
+        dto.setMail(email);
+        dto.setLanguage(getLanguage());
+        dto.setAdmin(isAdmin);
+        return dto;
     }
 
-    public User(String userName, String email, String password, UserType type) {
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-        this.type = type;
+    public UserDto toDtoWithPermission() {
+        var dto = new UserDto();
+        dto.setId(getId());
+        dto.setNickName(userName);
+        dto.setPassword(password);
+        dto.setMail(email);
+        dto.setLanguage(getLanguage());
+        dto.setAdmin(isAdmin);
+        dto.setPermissionDtos(permissions.stream().map(Permission::toDtoReduce).collect(Collectors.toSet()));
+        return dto;
+    }
+
+    public static User toDomain(UserDto dto) {
+        var domain = new User();
+        domain.setId(dto.getId());
+        domain.setUserName(dto.getNickName());
+        domain.setPassword(dto.getPassword());
+        domain.setLanguage(dto.getLanguage());
+        domain.setEmail(dto.getMail());
+        domain.setPermissions(dto.getPermissionDtos().stream().map(Permission::toDomain).collect(Collectors.toSet()));
+        return domain;
     }
 
     public String getUserName() {
@@ -57,12 +82,28 @@ public class User extends Auditable {
         this.password = password;
     }
 
-    public UserType getType() {
-        return type;
+    public Language getLanguage() {
+        return language;
     }
 
-    public void setType(UserType type) {
-        this.type = type;
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 }
 

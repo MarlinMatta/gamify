@@ -2,23 +2,21 @@ package edu.uapa.web.app.gamify.domains.people;
 
 import edu.uapa.web.app.gamify.domains.locations.Address;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
-import edu.uapa.web.app.gamify.models.enums.Gender;
+import edu.utesa.lib.models.enums.person.Gender;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity(name = "people")
 public class Person extends Auditable {
-    @Column(nullable = false)
     private String names;
-    @Column(nullable = false)
     private String lastNames;
-    @Column(nullable = false)
     private Date birth;
-    @Column(nullable = false)
     private Gender gender;
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
 

@@ -4,17 +4,19 @@ import edu.uapa.web.app.gamify.domains.people.Person;
 import edu.uapa.web.app.gamify.domains.securities.User;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "students")
 public class Student extends Auditable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id")
-    @Column(nullable = false)
     private Person person;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "lazy_id")
-    @Column(nullable = false)
     private User user;
 
     public Student() {

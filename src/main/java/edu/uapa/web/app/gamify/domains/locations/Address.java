@@ -7,16 +7,14 @@ import javax.persistence.*;
 @Entity(name = "addresses")
 public class Address extends Auditable {
 
+    //Este campo es EAGER por que no hay una QueryTab para address y los query n+1 no seran continuos
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id")
     private Country country;
-
     @Column(nullable = false)
     private String city;
-
     @Column(nullable = false)
     private String sector;
-
     private String address;
 
     public Address() {
