@@ -6,15 +6,15 @@ import org.springframework.boot.CommandLineRunner;
 public class BootStrap implements CommandLineRunner {
 
     @Autowired
-    BasicCountries basicCountries;
+    private BasicCountries basicCountries;
     @Autowired
-    BasicParameter basicParameter;
+    private BasicParameter basicParameter;
     @Autowired
-    BasicPermission basicPermission;
+    private BasicPermission basicPermission;
     @Autowired
-    BasicPermissionGroup basicPermissionGroup;
+    private BasicPermissionGroup basicPermissionGroup;
     @Autowired
-    BasicUser basicUser;
+    private BasicUser basicUser;
 
     private void productive() {
         basicCountries.insert();

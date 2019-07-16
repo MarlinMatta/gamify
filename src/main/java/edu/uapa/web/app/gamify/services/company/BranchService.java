@@ -1,22 +1,22 @@
-package edu.uapa.web.app.gamify.services.address;
+package edu.uapa.web.app.gamify.services.company;
 
-import edu.uapa.web.app.gamify.domains.locations.Address;
-import edu.uapa.web.app.gamify.repositories.address.AddressRepo;
+import edu.uapa.web.app.gamify.domains.company.Branch;
+import edu.uapa.web.app.gamify.repositories.company.BranchRepo;
 import edu.uapa.web.app.gamify.utils.Constants;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 @Service
-public class AddressService {
+public class BranchService {
 
-    private final AddressRepo repository;
+    private final BranchRepo repository;
 
-    public AddressService(AddressRepo repository) {
+    public BranchService(BranchRepo repository) {
         this.repository = repository;
     }
 
-    private Address merge(Address item, String userName) {
+    private Branch merge(Branch item, String userName) {
         if (item != null) {
             if (repository.existsById(item.getId())) {
                 item.setLastModifiedDate(new Date());
@@ -30,7 +30,7 @@ public class AddressService {
         return null;
     }
 
-    Address bootStrap(Address item) {
+    Branch bootStrap(Branch item) {
         return merge(item, Constants.SYSTEM_USER);
     }
 }
