@@ -21,7 +21,6 @@ public class Company extends Auditable {
     private String name;
     private String url;
     private String activity;
-    private String RNC;
     private String imgAddress;
     private String description;
     private String rnc;
