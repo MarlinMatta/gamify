@@ -54,7 +54,7 @@ public class BasicUser implements BootStrapInsert {
 
     private Set<Permission> gamePermissions() {
         Set<Permission> permissions = new HashSet<>();
-        permissionGroupService.findByName("SYSTEM_USER").ifPresent(it -> permissions.addAll(it.getEagerPermissions()));
+        permissionGroupService.findByName("GAME").ifPresent(it -> permissions.addAll(it.getEagerPermissions()));
         return permissions;
     }
 
