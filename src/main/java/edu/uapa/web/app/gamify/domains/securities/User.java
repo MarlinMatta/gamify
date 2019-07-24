@@ -43,7 +43,7 @@ public class User extends Auditable {
         dto.setMail(email);
         dto.setLanguage(getLanguage());
         dto.setAdmin(isAdmin);
-        dto.setPermissionDtos(permissions.stream().map(Permission::toDtoReduce).collect(Collectors.toSet()));
+        dto.setPermissions(permissions.stream().map(Permission::toDtoReduce).collect(Collectors.toSet()));
         return dto;
     }
 
@@ -54,7 +54,7 @@ public class User extends Auditable {
         domain.setPassword(dto.getPassword());
         domain.setLanguage(dto.getLanguage());
         domain.setEmail(dto.getMail());
-        domain.setPermissions(dto.getPermissionDtos().stream().map(Permission::toDomain).collect(Collectors.toSet()));
+        domain.setPermissions(dto.getPermissions().stream().map(Permission::toDomain).collect(Collectors.toSet()));
         return domain;
     }
 
