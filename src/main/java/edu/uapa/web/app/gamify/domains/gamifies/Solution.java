@@ -1,10 +1,18 @@
 package edu.uapa.web.app.gamify.domains.gamifies;
 
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 import javax.persistence.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity(name = "solutions")
 public class Solution extends Auditable {
     @Column(nullable = false)
@@ -16,37 +24,4 @@ public class Solution extends Auditable {
 
     @Column(nullable = false)
     private boolean is_correct;
-
-    public Solution() {
-    }
-
-    public Solution(String solution, Problem problem, boolean is_correct) {
-        this.solution = solution;
-        this.problem = problem;
-        this.is_correct = is_correct;
-    }
-
-    public String getSolution() {
-        return solution;
-    }
-
-    public void setSolution(String solution) {
-        this.solution = solution;
-    }
-
-    public Problem getProblem() {
-        return problem;
-    }
-
-    public void setProblem(Problem problem) {
-        this.problem = problem;
-    }
-
-    public boolean isIs_correct() {
-        return is_correct;
-    }
-
-    public void setIs_correct(boolean is_correct) {
-        this.is_correct = is_correct;
-    }
 }

@@ -38,7 +38,7 @@ public class PermissionController {
     public ResponseEntity<List<PermissionGroupDto>> getGroup(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
         long start = System.currentTimeMillis();
         List<PermissionGroupDto> result = groupService.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(PermissionGroup::toDto).collect(Collectors.toList());
-        System.out.println("Permission Group Get Total Time: " + (System.currentTimeMillis() - start));
+        System.out.println("Permission Grade Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -54,7 +54,7 @@ public class PermissionController {
     public Long count(@RequestParam String filterValue) {
         long start = System.currentTimeMillis();
         Long result = groupService.count("%" + filterValue + "%");
-        System.out.println("Permission Group Count Total Time: " + (System.currentTimeMillis() - start));
+        System.out.println("Permission Grade Count Total Time: " + (System.currentTimeMillis() - start));
         return result;
     }
 
@@ -72,7 +72,7 @@ public class PermissionController {
         long start = System.currentTimeMillis();
         if (groupService.bootStrap(PermissionGroup.toDomain(dto)) != null)
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        System.out.println("Permission Group Update Total Time: " + (System.currentTimeMillis() - start));
+        System.out.println("Permission Grade Update Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -90,7 +90,7 @@ public class PermissionController {
         long start = System.currentTimeMillis();
         if (groupService.bootStrap(PermissionGroup.toDomain(dto)) != null)
             return new ResponseEntity<>(HttpStatus.CREATED);
-        System.out.println("Permission Group Save Total Time: " + (System.currentTimeMillis() - start));
+        System.out.println("Permission Grade Save Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -106,7 +106,7 @@ public class PermissionController {
     public ResponseEntity deleteGroup(@RequestParam String id) {
         long start = System.currentTimeMillis();
         groupService.softDelete(Long.parseLong(id));
-        System.out.println("Permission Group Delete Total Time: " + (System.currentTimeMillis() - start));
+        System.out.println("Permission Grade Delete Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(HttpStatus.OK);
     }
     //@RequestHeader("accept-language") String language

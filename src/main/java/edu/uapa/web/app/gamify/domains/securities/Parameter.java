@@ -3,12 +3,20 @@ package edu.uapa.web.app.gamify.domains.securities;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
 import edu.utesa.lib.models.dtos.security.ParamDto;
 import edu.utesa.lib.models.enums.type.security.EnumParamValueType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity(name = "parameters")
 public class Parameter extends Auditable {
     @Column(unique = true)
@@ -21,9 +29,6 @@ public class Parameter extends Auditable {
     private String value = "";
     private String description;
     private Boolean changeRoot = false;
-
-    public Parameter() {
-    }
 
     public ParamDto toDto() {
         ParamDto dto = new ParamDto();
@@ -47,53 +52,5 @@ public class Parameter extends Auditable {
         parameter.setChangeRoot(dto.getChangeRoot());
         parameter.setDescription(dto.getDescription());
         return parameter;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public EnumParamValueType getParamValueType() {
-        return paramValueType;
-    }
-
-    public void setParamValueType(EnumParamValueType paramValueType) {
-        this.paramValueType = paramValueType;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Boolean getChangeRoot() {
-        return changeRoot;
-    }
-
-    public void setChangeRoot(Boolean changeRoot) {
-        this.changeRoot = changeRoot;
     }
 }

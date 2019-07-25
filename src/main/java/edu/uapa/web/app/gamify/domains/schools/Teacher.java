@@ -3,12 +3,20 @@ package edu.uapa.web.app.gamify.domains.schools;
 import edu.uapa.web.app.gamify.domains.people.Person;
 import edu.uapa.web.app.gamify.domains.securities.User;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity(name = "teachers")
 public class Teacher extends Auditable {
     @ManyToOne(fetch = FetchType.EAGER)
@@ -18,28 +26,20 @@ public class Teacher extends Auditable {
     @JoinColumn(name = "lazy_id")
     private User user;
 
-    public Teacher() {
+    public Teacher toDto() {
+        Teacher dto = new Teacher();
+        dto.setId(getId());
+        dto.setPerson(person);
+        dto.setUser(user);
+        return dto;
     }
 
-    public Teacher(Person person, User user) {
-        this.person = person;
-        this.user = user;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public static Teacher toDomain(Teacher dto) {
+        var teacher = new Teacher();
+        teacher.setId(dto.getId());
+        teacher.setPerson(dto.getPerson());
+        teacher.setUser(dto.getUser());
+        return teacher;
     }
 }
 
