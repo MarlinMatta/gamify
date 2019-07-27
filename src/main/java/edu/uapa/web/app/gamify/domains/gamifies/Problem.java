@@ -31,7 +31,7 @@ public class Problem extends Auditable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "topic_id")
-    private Topic topic;
+    private GameTopic gameTopic;
 
     private String imageUrl;
 }

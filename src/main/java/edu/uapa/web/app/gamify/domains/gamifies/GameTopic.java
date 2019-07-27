@@ -12,8 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "topics")
-public class Topic extends Auditable {
+@Entity(name = "game-topics")
+public class GameTopic extends Auditable {
 
     @Column(nullable = false)
     private String topicName;

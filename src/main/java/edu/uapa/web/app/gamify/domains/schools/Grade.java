@@ -1,6 +1,7 @@
 package edu.uapa.web.app.gamify.domains.schools;
 
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
+import edu.utesa.lib.models.dtos.school.GradeDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,19 +22,19 @@ public class Grade extends Auditable {
     private String name;
     private String description;
 
-    public Grade toDto() {
-        Grade dto = new Grade();
+    public GradeDto toLazyDto() {
+        GradeDto dto = new GradeDto();
         dto.setId(getId());
-        dto.setSchool(school);
+        dto.setSchoolDto(school.toLazyDto());
         dto.setName(name);
         dto.setDescription(description);
         return dto;
     }
 
-    public static Grade toDomain(Grade dto) {
+    public static Grade toDomain(GradeDto dto) {
         var grade = new Grade();
         grade.setId(dto.getId());
-        grade.setSchool(dto.getSchool());
+        grade.school = School.toDomain(dto.getSchoolDto());
         grade.setName(dto.getName());
         grade.setDescription(dto.getDescription());
         return grade;

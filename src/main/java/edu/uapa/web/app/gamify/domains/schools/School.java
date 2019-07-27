@@ -2,12 +2,17 @@ package edu.uapa.web.app.gamify.domains.schools;
 
 import edu.uapa.web.app.gamify.domains.locations.Address;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
+import edu.utesa.lib.models.dtos.location.AddressDto;
+import edu.utesa.lib.models.dtos.school.SchoolDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,21 +28,21 @@ public class School extends Auditable {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    public School toLazyDto() {
-        School dto = new School();
+    public SchoolDto toLazyDto() {
+        SchoolDto dto = new SchoolDto();
         dto.setId(getId());
         dto.setName(name);
         dto.setDistrict(district);
-        dto.setAddress(address);
+        dto.setAddressDto(address.toLazyDto());
         return dto;
     }
 
-    public static School toDomain(School dto) {
-        var school = new School();
-        school.setId(dto.getId());
-        school.setName(dto.getName());
-        school.setDistrict(dto.getDistrict());
-        school.setAddress(dto.getAddress());
-        return school;
+    public static School toDomain(SchoolDto dto) {
+        var domain = new School();
+        domain.setId(dto.getId());
+        domain.setName(dto.getName());
+        domain.setDistrict(dto.getDistrict());
+        domain.address = Address.toDomain(dto.getAddressDto());
+        return domain;
     }
 }

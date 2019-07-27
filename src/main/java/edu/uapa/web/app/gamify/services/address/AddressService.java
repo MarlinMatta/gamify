@@ -30,7 +30,7 @@ public class AddressService {
         return null;
     }
 
-    Address bootStrap(Address item) {
+    public Address bootStrap(Address item) {
         return merge(item, Constants.SYSTEM_USER);
     }
 }

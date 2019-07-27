@@ -31,10 +31,10 @@ public class Address extends Auditable {
     @Column(nullable = false)
     private String address;
 
-    public Address toDto() {
-        Address dto = new Address();
+    public AddressDto toLazyDto() {
+        AddressDto dto = new AddressDto();
         dto.setId(getId());
-        dto.setCountry(country);
+        dto.setCountryDto(country.toLazyDto());
         dto.setCity(city);
         dto.setName(name);
         dto.setSector(sector);
@@ -43,10 +43,10 @@ public class Address extends Auditable {
         return dto;
     }
 
-    public static Address toDomain(Address dto) {
+    public static Address toDomain(AddressDto dto) {
         var address = new Address();
         address.setId(dto.getId());
-        address.setCountry(dto.getCountry());
+        address.country = Country.toDomain(dto.getCountryDto());
         address.setCity(dto.getCity());
         address.setName(dto.getName());
         address.setSector(dto.getSector());

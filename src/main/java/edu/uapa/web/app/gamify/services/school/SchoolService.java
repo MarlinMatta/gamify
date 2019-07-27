@@ -2,6 +2,7 @@ package edu.uapa.web.app.gamify.services.school;
 
 import edu.uapa.web.app.gamify.domains.schools.School;
 import edu.uapa.web.app.gamify.repositories.school.SchoolRepo;
+import edu.uapa.web.app.gamify.services.address.AddressService;
 import edu.uapa.web.app.gamify.utils.Constants;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,9 +16,11 @@ import java.util.Optional;
 public class SchoolService {
 
     private final SchoolRepo repository;
+    private final AddressService addressService;
 
-    public SchoolService(SchoolRepo repository) {
+    public SchoolService(SchoolRepo repository, AddressService addressService) {
         this.repository = repository;
+        this.addressService = addressService;
     }
 
     private School merge(School item, String userName) {
@@ -35,6 +38,9 @@ public class SchoolService {
     }
 
     public School bootStrap(School item) {
+        if (item.getAddress().getId() != null) {
+            item.setAddress(addressService.bootStrap(item.getAddress()));
+        }
         return merge(item, Constants.SYSTEM_USER);
     }
 

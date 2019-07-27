@@ -3,6 +3,7 @@ package edu.uapa.web.app.gamify.controllers.school;
 import edu.uapa.web.app.gamify.domains.schools.Grade;
 import edu.uapa.web.app.gamify.services.school.GradeService;
 import edu.uapa.web.app.gamify.utils.Urls;
+import edu.utesa.lib.models.dtos.school.GradeDto;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,9 +24,9 @@ public class GradeController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Grade>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
+    public ResponseEntity<List<GradeDto>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
         long start = System.currentTimeMillis();
-        List<Grade> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(Grade::toDto).collect(Collectors.toList());
+        List<GradeDto> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(Grade::toLazyDto).collect(Collectors.toList());
         System.out.println("Grade Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -39,9 +40,9 @@ public class GradeController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Grade> update(@RequestBody Grade Grade) {
+    public ResponseEntity<GradeDto> update(@RequestBody GradeDto dto) {
         long start = System.currentTimeMillis();
-        if (service.bootStrap(Grade.toDomain(Grade)) != null) {
+        if (service.bootStrap(Grade.toDomain(dto)) != null) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         System.out.println("Grade Update Total Time: " + (System.currentTimeMillis() - start));
@@ -49,13 +50,21 @@ public class GradeController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Grade> save(@RequestBody Grade Grade) {
+    public ResponseEntity<GradeDto> save(@RequestBody GradeDto dto) {
         long start = System.currentTimeMillis();
-        if (service.bootStrap(Grade.toDomain(Grade)) != null) {
+        if (service.bootStrap(Grade.toDomain(dto)) != null) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         System.out.println("Grade Save Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ResponseEntity<List<GradeDto>> getAll() {
+        long start = System.currentTimeMillis();
+        List<GradeDto> result = service.findAll().stream().map(Grade::toLazyDto).collect(Collectors.toList());
+        System.out.println("School Get Total Time: " + (System.currentTimeMillis() - start));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

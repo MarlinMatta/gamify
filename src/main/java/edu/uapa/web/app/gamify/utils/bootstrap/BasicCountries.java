@@ -29,7 +29,7 @@ class BasicCountries implements BootStrapInsert {
     }
 
     private void createAmericanCountries() {
-//        Arrays.stream(AmericanCountries.values()).forEach(countries -> countryService.findByName(AmericanCountries.getCaption(countries)).orElseGet(() -> countryService.bootStrap(new Country(AmericanCountries.getCaption(countries)))));
+        Arrays.stream(AmericanCountries.values()).forEach(countries -> countryService.findByName(AmericanCountries.getCaption(countries)).orElseGet(() -> countryService.bootStrap(new Country(AmericanCountries.getCaption(countries)))));
     }
 
     private void createEuropeanCountries() {

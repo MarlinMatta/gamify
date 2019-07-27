@@ -1,7 +1,7 @@
 package edu.uapa.web.app.gamify.domains.schools;
 
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
-import edu.utesa.lib.models.dtos.school.SubjectDto;
+import edu.utesa.lib.models.dtos.school.TopicDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,30 +13,32 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "subjects")
-public class Subject extends Auditable {
+@Entity(name = "topics")
+public class Topic extends Auditable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id")
-    private Grade grade;
+    private Subject subject;
     @Column(nullable = false)
     private String name;
     private String description;
 
-    public SubjectDto toLazyDto() {
-        SubjectDto dto = new SubjectDto();
+    public TopicDto toLazyDto() {
+        TopicDto dto = new TopicDto();
         dto.setId(getId());
-        dto.setGradeDto(grade.toLazyDto());
+        dto.setSubjectDto(subject.toLazyDto());
         dto.setName(name);
         dto.setDescription(description);
         return dto;
     }
 
-    public static Subject toDomain(SubjectDto dto) {
-        var subject = new Subject();
-        subject.setId(dto.getId());
-        subject.grade = Grade.toDomain(dto.getGradeDto());
-        subject.setName(dto.getName());
-        subject.setDescription(dto.getDescription());
-        return subject;
+    public static Topic toDomain(TopicDto dto) {
+        var domain = new Topic();
+        domain.setId(dto.getId());
+        domain.subject = Subject.toDomain(dto.getSubjectDto());
+        domain.setName(dto.getName());
+        domain.setDescription(dto.getDescription());
+        return domain;
     }
 }
+
+

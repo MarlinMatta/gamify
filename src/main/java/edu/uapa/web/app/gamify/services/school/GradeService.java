@@ -8,14 +8,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class GradeService {
 
     private final GradeRepo repository;
+    private final SchoolService schoolService;
 
-    public GradeService(GradeRepo repository) {
+    public GradeService(GradeRepo repository, SchoolService schoolService) {
         this.repository = repository;
+        this.schoolService = schoolService;
     }
 
     private Grade merge(Grade item, String userName) {
@@ -33,11 +36,18 @@ public class GradeService {
     }
 
     public Grade bootStrap(Grade item) {
+        if (item.getSchool().getId() != null) {
+            item.setSchool(schoolService.bootStrap(item.getSchool()));
+        }
         return merge(item, Constants.SYSTEM_USER);
     }
 
     public Page<Grade> findAll(Pageable pageable, String filterValue) {
         return repository.findAllByNameLikeAndEnabled(pageable, filterValue, true);
+    }
+
+    public List<Grade> findAll() {
+        return repository.findAll();
     }
 
     public long count(String filterValue) {

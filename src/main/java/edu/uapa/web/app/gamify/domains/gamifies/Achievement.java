@@ -1,6 +1,5 @@
 package edu.uapa.web.app.gamify.domains.gamifies;
 
-import edu.uapa.web.app.gamify.domains.schools.Teacher;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
 import edu.uapa.web.app.gamify.models.enums.Difficulty;
 import lombok.AllArgsConstructor;
@@ -23,7 +22,7 @@ public class Achievement extends Auditable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "topic_id")
-    private Topic topic;
+    private GameTopic gameTopic;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

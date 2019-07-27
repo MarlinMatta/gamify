@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CountryService {
@@ -39,6 +41,15 @@ public class CountryService {
     public Page<Country> findAll(Pageable pageable, String filterValue) {
         return repository.findAllByNameLikeAndEnabled(pageable, filterValue, true);
     }
+
+    public List<Country> findAll() {
+        return repository.findAll();
+    }
+
+    public Optional<Country> findByName(String name) {
+        return repository.findByNameAndEnabled(name, true);
+    }
+
 
     public long count(String filterValue) {
         return repository.countByNameLikeAndEnabled(filterValue, true);
