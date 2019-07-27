@@ -23,7 +23,7 @@ public class School extends Auditable {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    public School toDto() {
+    public School toLazyDto() {
         School dto = new School();
         dto.setId(getId());
         dto.setName(name);

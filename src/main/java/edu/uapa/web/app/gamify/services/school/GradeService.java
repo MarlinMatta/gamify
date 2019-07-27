@@ -1,7 +1,7 @@
-package edu.uapa.web.app.gamify.services.address;
+package edu.uapa.web.app.gamify.services.school;
 
-import edu.uapa.web.app.gamify.domains.locations.Country;
-import edu.uapa.web.app.gamify.repositories.address.CountryRepo;
+import edu.uapa.web.app.gamify.domains.schools.Grade;
+import edu.uapa.web.app.gamify.repositories.school.GradeRepo;
 import edu.uapa.web.app.gamify.utils.Constants;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,15 +10,15 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class CountryService {
+public class GradeService {
 
-    private final CountryRepo repository;
+    private final GradeRepo repository;
 
-    public CountryService(CountryRepo repository) {
+    public GradeService(GradeRepo repository) {
         this.repository = repository;
     }
 
-    private Country merge(Country item, String userName) {
+    private Grade merge(Grade item, String userName) {
         if (item != null) {
             if (repository.existsById(item.getId())) {
                 item.setLastModifiedDate(new Date());
@@ -32,11 +32,11 @@ public class CountryService {
         return null;
     }
 
-    public Country bootStrap(Country item) {
+    public Grade bootStrap(Grade item) {
         return merge(item, Constants.SYSTEM_USER);
     }
 
-    public Page<Country> findAll(Pageable pageable, String filterValue) {
+    public Page<Grade> findAll(Pageable pageable, String filterValue) {
         return repository.findAllByNameLikeAndEnabled(pageable, filterValue, true);
     }
 

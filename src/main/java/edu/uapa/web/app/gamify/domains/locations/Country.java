@@ -17,4 +17,18 @@ import javax.persistence.Entity;
 public class Country extends Auditable {
     @Column(nullable = false)
     private String name;
+
+    public Country toDto() {
+        Country dto = new Country();
+        dto.setId(getId());
+        dto.setName(name);
+        return dto;
+    }
+
+    public static Country toDomain(Country dto) {
+        var country = new Country();
+        country.setId(dto.getId());
+        country.setName(dto.getName());
+        return country;
+    }
 }

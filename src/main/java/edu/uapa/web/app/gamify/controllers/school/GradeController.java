@@ -1,7 +1,7 @@
-package edu.uapa.web.app.gamify.controllers.location;
+package edu.uapa.web.app.gamify.controllers.school;
 
-import edu.uapa.web.app.gamify.domains.locations.Country;
-import edu.uapa.web.app.gamify.services.address.CountryService;
+import edu.uapa.web.app.gamify.domains.schools.Grade;
+import edu.uapa.web.app.gamify.services.school.GradeService;
 import edu.uapa.web.app.gamify.utils.Urls;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -13,20 +13,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = Urls.APP_COUNTRY)
-public class CountryController {
+@RequestMapping(value = Urls.APP_GRADE)
+public class GradeController {
 
-    private final CountryService service;
+    private final GradeService service;
 
-    public CountryController(CountryService service) {
+    public GradeController(GradeService service) {
         this.service = service;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Country>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
+    public ResponseEntity<List<Grade>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
         long start = System.currentTimeMillis();
-        List<Country> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(Country::toDto).collect(Collectors.toList());
-        System.out.println("Country Get Total Time: " + (System.currentTimeMillis() - start));
+        List<Grade> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(Grade::toDto).collect(Collectors.toList());
+        System.out.println("Grade Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -34,27 +34,27 @@ public class CountryController {
     public ResponseEntity<Long> count(@RequestParam String filterValue) {
         long start = System.currentTimeMillis();
         Long result = service.count("%" + filterValue + "%");
-        System.out.println("Country Count Total Time: " + (System.currentTimeMillis() - start));
+        System.out.println("Grade Count Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Country> update(@RequestBody Country Country) {
+    public ResponseEntity<Grade> update(@RequestBody Grade Grade) {
         long start = System.currentTimeMillis();
-        if (service.bootStrap(Country.toDomain(Country)) != null) {
+        if (service.bootStrap(Grade.toDomain(Grade)) != null) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
-        System.out.println("Country Update Total Time: " + (System.currentTimeMillis() - start));
+        System.out.println("Grade Update Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Country> save(@RequestBody Country Country) {
+    public ResponseEntity<Grade> save(@RequestBody Grade Grade) {
         long start = System.currentTimeMillis();
-        if (service.bootStrap(Country.toDomain(Country)) != null) {
+        if (service.bootStrap(Grade.toDomain(Grade)) != null) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
-        System.out.println("Country Save Total Time: " + (System.currentTimeMillis() - start));
+        System.out.println("Grade Save Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -62,7 +62,7 @@ public class CountryController {
     public ResponseEntity update(@RequestParam String id) {
         long start = System.currentTimeMillis();
         service.softDelete(Long.parseLong(id));
-        System.out.println("Country Delete Total Time: " + (System.currentTimeMillis() - start));
+        System.out.println("Grade Delete Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

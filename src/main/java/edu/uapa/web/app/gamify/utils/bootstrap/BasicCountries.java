@@ -29,22 +29,22 @@ class BasicCountries implements BootStrapInsert {
     }
 
     private void createAmericanCountries() {
-        Arrays.stream(AmericanCountries.values()).forEach(countries -> countryService.findByName(AmericanCountries.getCaption(countries)).orElseGet(() -> countryService.bootStrap(new Country(AmericanCountries.getCaption(countries)))));
+//        Arrays.stream(AmericanCountries.values()).forEach(countries -> countryService.findByName(AmericanCountries.getCaption(countries)).orElseGet(() -> countryService.bootStrap(new Country(AmericanCountries.getCaption(countries)))));
     }
 
     private void createEuropeanCountries() {
-        Arrays.stream(EuropeanCountries.values()).forEach(countries -> countryService.findByName(EuropeanCountries.getCaption(countries)).orElseGet(() -> countryService.bootStrap(new Country(EuropeanCountries.getCaption(countries)))));
+//        Arrays.stream(EuropeanCountries.values()).forEach(countries -> countryService.findByName(EuropeanCountries.getCaption(countries)).orElseGet(() -> countryService.bootStrap(new Country(EuropeanCountries.getCaption(countries)))));
     }
 
     private void createOceanicCountries() {
-        Arrays.stream(OceanicCountries.values()).forEach(countries -> countryService.findByName(OceanicCountries.getCaption(countries)).orElseGet(() -> countryService.bootStrap(new Country(OceanicCountries.getCaption(countries)))));
+//        Arrays.stream(OceanicCountries.values()).forEach(countries -> countryService.findByName(OceanicCountries.getCaption(countries)).orElseGet(() -> countryService.bootStrap(new Country(OceanicCountries.getCaption(countries)))));
     }
 
     private void createAfricanCountries() {
-        Arrays.stream(AfricanCountries.values()).forEach(countries -> countryService.findByName(AfricanCountries.getCaption(countries)).orElseGet(() -> countryService.bootStrap(new Country(AfricanCountries.getCaption(countries)))));
+//        Arrays.stream(AfricanCountries.values()).forEach(countries -> countryService.findByName(AfricanCountries.getCaption(countries)).orElseGet(() -> countryService.bootStrap(new Country(AfricanCountries.getCaption(countries)))));
     }
 
     private void createAsianCountries() {
-        Arrays.stream(AsianCountries.values()).forEachOrdered(countries -> countryService.findByName(AsianCountries.getCaption(countries)).orElseGet(() -> countryService.bootStrap(new Country(AsianCountries.getCaption(countries)))));
+//        Arrays.stream(AsianCountries.values()).forEachOrdered(countries -> countryService.findByName(AsianCountries.getCaption(countries)).orElseGet(() -> countryService.bootStrap(new Country(AsianCountries.getCaption(countries)))));
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,6 +44,10 @@ public class SchoolService {
 
     public Page<School> findAll(Pageable pageable, String filterValue) {
         return repository.findAllByNameLikeAndEnabled(pageable, filterValue, true);
+    }
+
+    public List<School> findAll() {
+        return repository.findAll();
     }
 
     public long count(String filterValue) {

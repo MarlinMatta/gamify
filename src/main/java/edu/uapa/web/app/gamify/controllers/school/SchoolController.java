@@ -25,7 +25,7 @@ public class SchoolController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<School>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
         long start = System.currentTimeMillis();
-        List<School> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(School::toDto).collect(Collectors.toList());
+        List<School> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(School::toLazyDto).collect(Collectors.toList());
         System.out.println("School Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -35,6 +35,14 @@ public class SchoolController {
         long start = System.currentTimeMillis();
         Long result = service.count("%" + filterValue + "%");
         System.out.println("School Count Total Time: " + (System.currentTimeMillis() - start));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ResponseEntity<List<School>> getAll() {
+        long start = System.currentTimeMillis();
+        List<School> result = service.findAll().stream().map(School::toLazyDto).collect(Collectors.toList());
+        System.out.println("School Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
