@@ -3,6 +3,7 @@ package edu.uapa.web.app.gamify.domains.schools;
 import edu.uapa.web.app.gamify.domains.people.Person;
 import edu.uapa.web.app.gamify.domains.securities.User;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
+import edu.utesa.lib.models.dtos.school.StudentDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,19 +28,19 @@ public class Student extends Auditable {
     @JoinColumn(name = "lazy_id")
     private User user;
 
-    public Student toDto() {
-        Student dto = new Student();
+    public StudentDto toDto() {
+        StudentDto dto = new StudentDto();
         dto.setId(getId());
-        dto.setPerson(person);
-        dto.setUser(user);
+        dto.setPersonDto(person.toEagerDto());
+        dto.setUserDto(user.toDto());
         return dto;
     }
 
-    public static Student toDomain(Student dto) {
+    public static Student toDomain(StudentDto dto) {
         var student = new Student();
         student.setId(dto.getId());
-        student.setPerson(dto.getPerson());
-        student.setUser(dto.getUser());
+        student.setPerson(Person.toDomain(dto.getPersonDto()));
+        student.setUser(User.toDomain(dto.getUserDto()));
         return student;
     }
 }

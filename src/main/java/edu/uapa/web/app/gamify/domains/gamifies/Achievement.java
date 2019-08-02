@@ -16,23 +16,16 @@ import java.text.DecimalFormat;
 @Setter
 @Entity(name = "achievements")
 public class Achievement extends Auditable {
-
     @Column(nullable = false)
     private String difficultyName;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "topic_id")
     private GameTopic gameTopic;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Difficulty difficulty;
-
     private String description;
-
     private DecimalFormat quantity;
-
     private DecimalFormat percent;
-
     private String iconUrl;
 }

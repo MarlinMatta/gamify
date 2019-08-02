@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 import javax.persistence.*;
 
 @AllArgsConstructor
@@ -17,21 +16,16 @@ import javax.persistence.*;
 @Setter
 @Entity(name = "problems")
 public class Problem extends Auditable {
-
-    @Column(nullable = false)
-    private String problem;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
-
+    @Column(nullable = false)
+    private String problem;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Difficulty difficulty;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "topic_id")
     private GameTopic gameTopic;
-
     private String imageUrl;
 }
