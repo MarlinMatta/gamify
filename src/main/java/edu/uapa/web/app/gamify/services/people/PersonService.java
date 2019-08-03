@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-class PersonService {
+public class PersonService {
 
     private final PersonRepo repository;
 
@@ -30,7 +30,7 @@ class PersonService {
         return null;
     }
 
-    Person bootStrap(Person item) {
+    public Person bootStrap(Person item) {
         return merge(item, Constants.SYSTEM_USER);
     }
 }

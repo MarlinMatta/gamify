@@ -44,14 +44,14 @@ public class Address extends Auditable {
     }
 
     public static Address toDomain(AddressDto dto) {
-        var address = new Address();
-        address.setId(dto.getId());
-        address.country = Country.toDomain(dto.getCountryDto());
-        address.setCity(dto.getCity());
-        address.setName(dto.getName());
-        address.setSector(dto.getSector());
-        address.setZipCode(dto.getZipCode());
-        address.setAddress(dto.getAddress());
-        return address;
+        var domain = new Address();
+        domain.setId(dto.getId());
+        domain.country = Country.toDomain(dto.getCountryDto());
+        domain.setCity(dto.getCity());
+        domain.setName(dto.getName());
+        domain.setSector(dto.getSector());
+        domain.setZipCode(dto.getZipCode());
+        domain.setAddress(dto.getAddress());
+        return domain;
     }
 }
