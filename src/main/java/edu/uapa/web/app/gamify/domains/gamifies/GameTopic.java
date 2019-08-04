@@ -14,13 +14,10 @@ import javax.persistence.*;
 @Setter
 @Entity(name = "game-topics")
 public class GameTopic extends Auditable {
-
     @Column(nullable = false)
     private String topicName;
-
     @Column(nullable = false)
     private String description;
-
     @Column(nullable = false)
     private String example;
 }

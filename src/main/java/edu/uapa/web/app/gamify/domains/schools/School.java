@@ -2,14 +2,11 @@ package edu.uapa.web.app.gamify.domains.schools;
 
 import edu.uapa.web.app.gamify.domains.locations.Address;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
-import edu.utesa.lib.models.dtos.location.AddressDto;
 import edu.utesa.lib.models.dtos.school.SchoolDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 
@@ -29,6 +26,14 @@ public class School extends Auditable {
     private Address address;
 
     public SchoolDto toLazyDto() {
+        SchoolDto dto = new SchoolDto();
+        dto.setId(getId());
+        dto.setName(name);
+        dto.setDistrict(district);
+        return dto;
+    }
+
+    public SchoolDto toEagerDto() {
         SchoolDto dto = new SchoolDto();
         dto.setId(getId());
         dto.setName(name);
