@@ -2,6 +2,7 @@ package edu.uapa.web.app.gamify.services.people;
 
 import edu.uapa.web.app.gamify.domains.people.Person;
 import edu.uapa.web.app.gamify.repositories.people.PersonRepo;
+import edu.uapa.web.app.gamify.services.address.AddressService;
 import edu.uapa.web.app.gamify.utils.Constants;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,11 @@ import java.util.Date;
 public class PersonService {
 
     private final PersonRepo repository;
+    private final AddressService addressService;
 
-    public PersonService(PersonRepo repository) {
+    public PersonService(PersonRepo repository, AddressService addressService) {
         this.repository = repository;
+        this.addressService = addressService;
     }
 
     private Person merge(Person item, String userName) {
@@ -31,6 +34,8 @@ public class PersonService {
     }
 
     public Person bootStrap(Person item) {
+        if (item.getAddress() != null)
+            item.setAddress(addressService.bootStrap(item.getAddress()));
         return merge(item, Constants.SYSTEM_USER);
     }
 }
