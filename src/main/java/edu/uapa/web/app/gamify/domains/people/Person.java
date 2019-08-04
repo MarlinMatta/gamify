@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -39,7 +41,11 @@ public class Person extends Auditable {
         var domain = new Person();
         domain.names = dto.getFirstNames();
         domain.lastNames = dto.getLastNames();
-        domain.birth = dto.getBirthDay();
+        try {
+            domain.birth = new SimpleDateFormat("dd/MM/yyyy").parse(dto.getBirthday());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         domain.gender = dto.getGender();
         domain.dni = dto.getDni();
         domain.nationality = dto.getNationality();
@@ -53,7 +59,7 @@ public class Person extends Auditable {
         dto.setId(getId());
         dto.setFirstNames(names);
         dto.setLastNames(lastNames);
-        dto.setBirthDay(birth);
+        dto.setBirthday(birth.toString());
         dto.setGender(gender);
         dto.setDni(dni);
         dto.setNationality(nationality);
@@ -66,7 +72,8 @@ public class Person extends Auditable {
         dto.setId(getId());
         dto.setFirstNames(names);
         dto.setLastNames(lastNames);
-        dto.setBirthDay(birth);
+        if (birth != null)
+            dto.setBirthday(birth.toString());
         dto.setGender(gender);
         dto.setDni(dni);
         dto.setNationality(nationality);

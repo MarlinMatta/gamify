@@ -25,7 +25,7 @@ public class Grade extends Auditable {
     public GradeDto toLazyDto() {
         GradeDto dto = new GradeDto();
         dto.setId(getId());
-        dto.setSchoolDto(school.toLazyDto());
+        dto.setSchoolDto(school.toEagerDto());
         dto.setName(name);
         dto.setDescription(description);
         return dto;

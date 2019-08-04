@@ -54,7 +54,8 @@ public class User extends Auditable {
         domain.setPassword(dto.getPassword());
         domain.setLanguage(dto.getLanguage());
         domain.setEmail(dto.getMail());
-        domain.setPermissions(dto.getPermissions().stream().map(Permission::toDomain).collect(Collectors.toSet()));
+        if (dto.getPermissions() != null)
+            domain.setPermissions(dto.getPermissions().stream().map(Permission::toDomain).collect(Collectors.toSet()));
         return domain;
     }
 
