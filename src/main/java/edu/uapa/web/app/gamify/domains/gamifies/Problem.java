@@ -26,12 +26,14 @@ public class Problem extends Auditable {
     private Topic topic;
     @Column(nullable = false)
     private String question;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinTable(name = "problem_answers", joinColumns = {@JoinColumn(name = "problem_id")}, inverseJoinColumns = @JoinColumn(name = "answer_id"))
-    private Set<Answer> incorrectAnswers;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "answer_id")
-    private Answer correctAnswer;
+    @Column(nullable = false)
+    private String correctAnswer;
+    @Column(nullable = false)
+    private String incorrectAnswer01;
+    @Column(nullable = false)
+    private String incorrectAnswer02;
+    @Column(nullable = false)
+    private String incorrectAnswer03;
 
     public ProblemDto toLazyDto() {
         ProblemDto dto = new ProblemDto();
@@ -39,8 +41,10 @@ public class Problem extends Auditable {
         dto.setTeacherDto (teacher.toLazyDto());
         dto.setTopicDto(topic.toLazyDto());
         dto.setQuestion(question);
-        dto.setIncorrectAnswers(incorrectAnswers.stream().map(Answer::toLazyDto).collect(Collectors.toSet()));
-        dto.setCorrectAnswer(correctAnswer.toLazyDto());
+        dto.setCorrectAnswer(correctAnswer);
+        dto.setIncorrectAnswer01(incorrectAnswer01);
+        dto.setIncorrectAnswer02(incorrectAnswer02);
+        dto.setIncorrectAnswer03(incorrectAnswer03);
         return dto;
     }
 
@@ -50,8 +54,10 @@ public class Problem extends Auditable {
         domain.teacher = Teacher.toDomain(dto.getTeacherDto());
         domain.topic = Topic.toDomain(dto.getTopicDto());
         domain.setQuestion(dto.getQuestion());
-        domain.setIncorrectAnswers(dto.getIncorrectAnswers().stream().map(Answer::toDomain).collect(Collectors.toSet()));
-        domain.correctAnswer = Answer.toDomain(dto.getCorrectAnswer());
+        domain.setCorrectAnswer(dto.getCorrectAnswer());
+        domain.setIncorrectAnswer01(dto.getIncorrectAnswer01());
+        domain.setIncorrectAnswer02(dto.getIncorrectAnswer02());
+        domain.setIncorrectAnswer03(dto.getIncorrectAnswer03());
         return domain;
     }
 }

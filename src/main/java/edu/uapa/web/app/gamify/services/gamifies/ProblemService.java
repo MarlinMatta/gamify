@@ -4,22 +4,21 @@ import edu.uapa.web.app.gamify.domains.gamifies.Answer;
 import edu.uapa.web.app.gamify.domains.gamifies.Problem;
 import edu.uapa.web.app.gamify.repositories.gamifies.ProblemRepo;
 import edu.uapa.web.app.gamify.utils.Constants;
+import edu.utesa.lib.models.dtos.school.AnswerDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @Service
 public class ProblemService {
 
     private final ProblemRepo repository;
-    private final AnswerService answerService;
+//    private final AnswerService answerService;
 
     private Problem merge(Problem item, String userName) {
         if (item != null) {
@@ -36,9 +35,6 @@ public class ProblemService {
     }
 
     public Problem bootStrap(Problem item) {
-        if (item.getCorrectAnswer().getId() != null) {
-            item.setCorrectAnswer(answerService.bootStrap(item.getCorrectAnswer()));
-        }
         return merge(item, Constants.SYSTEM_USER);
     }
 

@@ -40,11 +40,16 @@ public class Student extends Auditable {
     public StudentDto toLazyDto() {
         StudentDto dto = new StudentDto();
         dto.setId(getId());
-        dto.setPersonDto(person.toLazyDto());
-        dto.setAddressDto(address.toLazyDto());
-        dto.setSchoolDto(school.toLazyDto());
-        dto.setGradeDto(grade.toLazyDto());
-        dto.setUserDto(user.toDtoWithPermission());
+        if (person != null)
+            dto.setPersonDto(person.toLazyDto());
+        if (address != null)
+            dto.setAddressDto(address.toLazyDto());
+        if (school != null)
+            dto.setSchoolDto(school.toEagerDto());
+        if (grade != null)
+            dto.setGradeDto(grade.toLazyDto());
+        if (user != null)
+            dto.setUserDto(user.toDtoWithPermission());
         return dto;
     }
 
