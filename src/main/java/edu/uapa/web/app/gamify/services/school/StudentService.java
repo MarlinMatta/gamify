@@ -51,7 +51,7 @@ public class StudentService {
     }
 
     public Page<Student> findAll(Pageable pageable, String filterValue) {
-        return repository.findAllByPerson_NamesLikeAndEnabled(pageable, filterValue, true);
+        return repository.findAllByPerson_FirstNameLikeAndEnabled(pageable, filterValue, true);
     }
 
     public List<Student> findAll() {
@@ -63,7 +63,7 @@ public class StudentService {
     }
 
     public long count(String filterValue) {
-        return repository.countByPerson_NamesLikeAndEnabled(filterValue, true);
+        return repository.countByPerson_FirstNameLikeAndEnabled(filterValue, true);
     }
 
     public void softDelete(Long id) {

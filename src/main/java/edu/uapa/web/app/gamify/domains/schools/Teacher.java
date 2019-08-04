@@ -4,14 +4,16 @@ import edu.uapa.web.app.gamify.domains.locations.Address;
 import edu.uapa.web.app.gamify.domains.people.Person;
 import edu.uapa.web.app.gamify.domains.securities.User;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
-import edu.utesa.lib.models.dtos.school.GradeDto;
 import edu.utesa.lib.models.dtos.school.TeacherDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,11 +40,16 @@ public class Teacher extends Auditable {
     public TeacherDto toLazyDto() {
         TeacherDto dto = new TeacherDto();
         dto.setId(getId());
-        dto.setPersonDto(person.toLazyDto());
-        dto.setAddressDto(address.toLazyDto());
-        dto.setSchoolDto(school.toLazyDto());
-        dto.setGradeDto(grade.toLazyDto());
-        dto.setUserDto(user.toDtoWithPermission());
+        if (person != null)
+            dto.setPersonDto(person.toLazyDto());
+        if (address != null)
+            dto.setAddressDto(address.toLazyDto());
+        if (school != null)
+            dto.setSchoolDto(school.toEagerDto());
+        if (grade != null)
+            dto.setGradeDto(grade.toLazyDto());
+        if (user != null)
+            dto.setUserDto(user.toDtoWithPermission());
         return dto;
     }
 

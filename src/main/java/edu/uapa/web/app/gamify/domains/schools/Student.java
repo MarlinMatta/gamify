@@ -31,7 +31,7 @@ public class Student extends Auditable {
     public StudentDto toDto() {
         StudentDto dto = new StudentDto();
         dto.setId(getId());
-        dto.setPersonDto(person.toEagerDto());
+        dto.setPersonDto(person.toLazyDto());
         dto.setUserDto(user.toDto());
         return dto;
     }

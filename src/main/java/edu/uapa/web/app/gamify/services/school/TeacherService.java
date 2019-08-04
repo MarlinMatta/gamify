@@ -59,7 +59,7 @@ public class TeacherService {
     }
 
     public Page<Teacher> findAll(Pageable pageable, String filterValue) {
-        return repository.findAllByPersonFirstNameAndEnabled(pageable, filterValue, true);
+        return repository.findAllByPersonFirstNameLikeAndEnabled(pageable, filterValue, true);
     }
 
     public List<Teacher> findAll() {

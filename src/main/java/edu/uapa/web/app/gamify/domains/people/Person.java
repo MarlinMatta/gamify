@@ -1,6 +1,5 @@
 package edu.uapa.web.app.gamify.domains.people;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import edu.uapa.web.app.gamify.domains.locations.Address;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
 import edu.utesa.lib.models.dtos.person.PersonDto;
@@ -13,7 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -28,7 +28,6 @@ public class Person extends Auditable {
     @Column(nullable = false)
     private String lastName;
 
-    @JsonFormat(shape = JsonFormat.Shape.OBJECT, pattern = "yyyy-MM-dd")
     @Column(nullable = false)
     private Date birthday;
     @Column(nullable = false)
@@ -46,7 +45,7 @@ public class Person extends Auditable {
         dto.setDni(dni);
         dto.setFirstNames(firstName);
         dto.setLastNames(lastName);
-        dto.setBirthday(birthday);
+        dto.setBirthday(birthday.toString());
         dto.setGender(gender);
         dto.setNationality(nationality);
         dto.setMaritalStatus(maritalStatus);
@@ -60,7 +59,11 @@ public class Person extends Auditable {
         domain.setDni(dto.getDni());
         domain.setFirstName(dto.getFirstNames());
         domain.setLastName(dto.getLastNames());
-        domain.setBirthday(dto.getBirthday());
+        try {
+            domain.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(dto.getBirthday()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         domain.setGender(dto.getGender());
         domain.setNationality(dto.getNationality());
         domain.setMaritalStatus(dto.getMaritalStatus());
