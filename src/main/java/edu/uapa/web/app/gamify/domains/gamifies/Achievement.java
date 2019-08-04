@@ -20,7 +20,7 @@ public class Achievement extends Auditable {
     private String difficultyName;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "topic_id")
-    private GameTopic gameTopic;
+    private Topic gameTopic;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Difficulty difficulty;
