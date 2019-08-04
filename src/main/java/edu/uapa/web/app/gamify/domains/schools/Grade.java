@@ -32,12 +32,12 @@ public class Grade extends Auditable {
     }
 
     public static Grade toDomain(GradeDto dto) {
-        var grade = new Grade();
-        grade.setId(dto.getId());
-        grade.school = School.toDomain(dto.getSchoolDto());
-        grade.setName(dto.getName());
-        grade.setDescription(dto.getDescription());
-        return grade;
+        var domain = new Grade();
+        domain.setId(dto.getId());
+        domain.school = School.toDomain(dto.getSchoolDto());
+        domain.setName(dto.getName());
+        domain.setDescription(dto.getDescription());
+        return domain;
     }
 }
 

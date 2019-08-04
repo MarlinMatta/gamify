@@ -26,17 +26,9 @@ public class TeacherController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<TeacherDto>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
         long start = System.currentTimeMillis();
-        List<TeacherDto> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(Teacher::toDto).collect(Collectors.toList());
+        List<TeacherDto> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(Teacher::toLazyDto).collect(Collectors.toList());
         System.out.println("Teacher Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
-    public ResponseEntity<TeacherDto> refresh(@RequestParam String id) {
-        long start = System.currentTimeMillis();
-        TeacherDto employee = service.refresh(Long.parseLong(id)).map(Teacher::toDto).orElse(null);
-        System.out.println("Teacher Get Total Time: " + (System.currentTimeMillis() - start));
-        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
     @RequestMapping(value = Urls.COUNT, method = RequestMethod.GET)
@@ -48,9 +40,9 @@ public class TeacherController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<TeacherDto> update(@RequestBody TeacherDto studentDto) {
+    public ResponseEntity<TeacherDto> update(@RequestBody TeacherDto dto) {
         long start = System.currentTimeMillis();
-        if (service.bootStrap(Teacher.toDomain(studentDto)) != null) {
+        if (service.bootStrap(Teacher.toDomain(dto)) != null) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         System.out.println("Teacher Update Total Time: " + (System.currentTimeMillis() - start));
@@ -65,6 +57,14 @@ public class TeacherController {
         }
         System.out.println("Teacher Save Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ResponseEntity<List<TeacherDto>> getAll() {
+        long start = System.currentTimeMillis();
+        List<TeacherDto> result = service.findAll().stream().map(Teacher::toLazyDto).collect(Collectors.toList());
+        System.out.println("School Get Total Time: " + (System.currentTimeMillis() - start));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

@@ -40,7 +40,7 @@ public class BasicUser implements BootStrapInsert {
             user.setEmail(email);
             user.setPassword(password);
             user.setLanguage(language);
-            user.setAdmin(isAdmin);
+            user.setIsAdmin(isAdmin);
             user.setPermissions(permissions);
             service.bootStrap(user);
         }

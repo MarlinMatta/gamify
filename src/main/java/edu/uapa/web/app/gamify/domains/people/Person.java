@@ -1,5 +1,6 @@
 package edu.uapa.web.app.gamify.domains.people;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import edu.uapa.web.app.gamify.domains.locations.Address;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
 import edu.utesa.lib.models.dtos.person.PersonDto;
@@ -12,8 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -22,64 +22,50 @@ import java.util.Date;
 @Setter
 @Entity(name = "people")
 public class Person extends Auditable {
+    private String dni;
     @Column(nullable = false)
-    private String names;
+    private String firstName;
     @Column(nullable = false)
-    private String lastNames;
+    private String lastName;
+
+    @JsonFormat(shape = JsonFormat.Shape.OBJECT, pattern = "yyyy-MM-dd")
     @Column(nullable = false)
-    private Date birth;
+    private Date birthday;
     @Column(nullable = false)
     private Gender gender;
-    private String dni;
+    @Column(nullable = false)
     private Nationality nationality;
     private MaritalStatus maritalStatus;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    public static Person toDomain(PersonDto dto) {
-        var domain = new Person();
-        domain.names = dto.getFirstNames();
-        domain.lastNames = dto.getLastNames();
-        try {
-            domain.birth = new SimpleDateFormat("dd/MM/yyyy").parse(dto.getBirthday());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        domain.gender = dto.getGender();
-        domain.dni = dto.getDni();
-        domain.nationality = dto.getNationality();
-        domain.maritalStatus = dto.getMaritalStatus();
-        domain.address = Address.toDomain(dto.getAddressDto());
-        return domain;
-    }
-
     public PersonDto toLazyDto() {
-        var dto = new PersonDto();
+        PersonDto dto = new PersonDto();
         dto.setId(getId());
-        dto.setFirstNames(names);
-        dto.setLastNames(lastNames);
-        dto.setBirthday(birth.toString());
-        dto.setGender(gender);
         dto.setDni(dni);
-        dto.setNationality(nationality);
-        dto.setMaritalStatus(maritalStatus);
-        return dto;
-    }
-
-    public PersonDto toEagerDto() {
-        var dto = new PersonDto();
-        dto.setId(getId());
-        dto.setFirstNames(names);
-        dto.setLastNames(lastNames);
-        if (birth != null)
-            dto.setBirthday(birth.toString());
+        dto.setFirstNames(firstName);
+        dto.setLastNames(lastName);
+        dto.setBirthday(birthday);
         dto.setGender(gender);
-        dto.setDni(dni);
         dto.setNationality(nationality);
         dto.setMaritalStatus(maritalStatus);
         dto.setAddressDto(address.toLazyDto());
         return dto;
+    }
+
+    public static Person toDomain(PersonDto dto) {
+        var domain = new Person();
+        domain.setId(dto.getId());
+        domain.setDni(dto.getDni());
+        domain.setFirstName(dto.getFirstNames());
+        domain.setLastName(dto.getLastNames());
+        domain.setBirthday(dto.getBirthday());
+        domain.setGender(dto.getGender());
+        domain.setNationality(dto.getNationality());
+        domain.setMaritalStatus(dto.getMaritalStatus());
+        domain.address = Address.toDomain(dto.getAddressDto());
+        return domain;
     }
 }
 

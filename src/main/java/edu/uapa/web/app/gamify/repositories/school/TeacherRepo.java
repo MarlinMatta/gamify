@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TeacherRepo extends JpaRepository<Teacher, Long> {
 
-    Page<Teacher> findAllByPerson_NamesLikeAndEnabled(Pageable pageable, String filterValue, boolean enabled);
+    Page<Teacher> findAllByPersonFirstNameAndEnabled(Pageable pageable, String filterValue, boolean enabled);
 
-    long countByPerson_NamesLikeAndEnabled(String filterValue, boolean enabled);
+    long countByPersonFirstNameLikeAndEnabled(String filterValue, boolean enabled);
 }

@@ -2,29 +2,28 @@ package edu.uapa.web.app.gamify.services.school;
 
 import edu.uapa.web.app.gamify.domains.schools.Teacher;
 import edu.uapa.web.app.gamify.repositories.school.TeacherRepo;
+import edu.uapa.web.app.gamify.services.address.AddressService;
 import edu.uapa.web.app.gamify.services.people.PersonService;
 import edu.uapa.web.app.gamify.services.securities.UserService;
 import edu.uapa.web.app.gamify.utils.Constants;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class TeacherService {
 
     private final TeacherRepo repository;
+    private final SchoolService schoolService;
+    private final AddressService addressService;
+    private final GradeService gradeService;
     private final PersonService personService;
     private final UserService userService;
-
-    public TeacherService(TeacherRepo repository, PersonService personService, UserService userService) {
-        this.repository = repository;
-        this.personService = personService;
-        this.userService = userService;
-    }
 
     private Teacher merge(Teacher item, String userName) {
         if (item != null) {
@@ -44,6 +43,15 @@ public class TeacherService {
         if (item.getPerson().getId() != null) {
             item.setPerson(personService.bootStrap(item.getPerson()));
         }
+        if (item.getAddress().getId() != null) {
+            item.setAddress(addressService.bootStrap(item.getAddress()));
+        }
+        if (item.getSchool().getId() != null) {
+            item.setSchool(schoolService.bootStrap(item.getSchool()));
+        }
+        if (item.getGrade().getId() != null) {
+            item.setGrade(gradeService.bootStrap(item.getGrade()));
+        }
         if (item.getUser().getId() != null) {
             item.setUser(userService.bootStrap(item.getUser()));
         }
@@ -51,19 +59,15 @@ public class TeacherService {
     }
 
     public Page<Teacher> findAll(Pageable pageable, String filterValue) {
-        return repository.findAllByPerson_NamesLikeAndEnabled(pageable, filterValue, true);
+        return repository.findAllByPersonFirstNameAndEnabled(pageable, filterValue, true);
     }
 
     public List<Teacher> findAll() {
         return repository.findAll();
     }
 
-    public Optional<Teacher> refresh(long id) {
-        return repository.findById(id);
-    }
-
     public long count(String filterValue) {
-        return repository.countByPerson_NamesLikeAndEnabled(filterValue, true);
+        return repository.countByPersonFirstNameLikeAndEnabled(filterValue, true);
     }
 
     public void softDelete(Long id) {
