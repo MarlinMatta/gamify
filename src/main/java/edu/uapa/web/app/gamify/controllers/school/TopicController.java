@@ -1,6 +1,6 @@
 package edu.uapa.web.app.gamify.controllers.school;
 
-import edu.uapa.web.app.gamify.domains.schools.Topic;
+import edu.uapa.web.app.gamify.domains.gamifies.Topic;
 import edu.uapa.web.app.gamify.services.school.TopicService;
 import edu.uapa.web.app.gamify.utils.Urls;
 import edu.utesa.lib.models.dtos.school.TopicDto;

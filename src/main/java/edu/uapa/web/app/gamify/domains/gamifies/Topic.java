@@ -1,5 +1,6 @@
-package edu.uapa.web.app.gamify.domains.schools;
+package edu.uapa.web.app.gamify.domains.gamifies;
 
+import edu.uapa.web.app.gamify.domains.schools.Subject;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
 import edu.utesa.lib.models.dtos.school.TopicDto;
 import lombok.AllArgsConstructor;

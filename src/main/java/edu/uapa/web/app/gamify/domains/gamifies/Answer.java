@@ -6,18 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "game-topics")
-public class GameTopic extends Auditable {
+@Entity(name = "answers")
+public class Answer extends Auditable {
     @Column(nullable = false)
-    private String topicName;
-    @Column(nullable = false)
-    private String description;
-    @Column(nullable = false)
-    private String example;
+    String description;
 }

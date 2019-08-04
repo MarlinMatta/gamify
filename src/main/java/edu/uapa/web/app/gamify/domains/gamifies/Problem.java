@@ -1,31 +1,30 @@
 package edu.uapa.web.app.gamify.domains.gamifies;
 
-import edu.uapa.web.app.gamify.domains.schools.Teacher;
-import edu.uapa.web.app.gamify.models.abstracts.Auditable;
-import edu.uapa.web.app.gamify.models.enums.Difficulty;
+import edu.utesa.lib.models.dtos.school.AnswerDto;
+import edu.utesa.lib.models.dtos.school.TeacherDto;
+import edu.utesa.lib.models.dtos.school.TopicDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity(name = "problems")
-public class Problem extends Auditable {
-    @ManyToOne(fetch = FetchType.EAGER)
+public class Problem {
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
-    @Column(nullable = false)
-    private String problem;
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Difficulty difficulty;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "topic_id")
-    private GameTopic gameTopic;
-    private String imageUrl;
+    private TeacherDto teacherDto;
+    private TopicDto topicDto;
+    private String question;
+    private List<AnswerDto> incorrectAnswers;
+    private AnswerDto correctAnswer;
 }
