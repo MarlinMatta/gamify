@@ -1,6 +1,6 @@
 package edu.uapa.web.app.gamify.repositories.school;
 
-import edu.uapa.web.app.gamify.domains.schools.Topic;
+import edu.uapa.web.app.gamify.domains.gamifies.Topic;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

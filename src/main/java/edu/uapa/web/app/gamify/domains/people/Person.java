@@ -27,7 +27,6 @@ public class Person extends Auditable {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
-
     @JsonFormat(shape = JsonFormat.Shape.OBJECT, pattern = "yyyy-MM-dd")
     @Column(nullable = false)
     private Date birthday;

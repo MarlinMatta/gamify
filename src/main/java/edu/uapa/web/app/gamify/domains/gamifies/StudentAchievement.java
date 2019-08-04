@@ -1,6 +1,5 @@
 package edu.uapa.web.app.gamify.domains.gamifies;
 
-import edu.uapa.web.app.gamify.domains.schools.Student;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

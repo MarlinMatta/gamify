@@ -1,5 +1,6 @@
 package edu.uapa.web.app.gamify.domains.schools;
 
+import edu.uapa.web.app.gamify.domains.locations.Address;
 import edu.uapa.web.app.gamify.domains.people.Person;
 import edu.uapa.web.app.gamify.domains.securities.User;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
@@ -23,25 +24,40 @@ public class Student extends Auditable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id")
     private Person person;
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "lazy_id")
+    @JoinColumn(name = "address_id")
+    private Address address;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "school_id")
+    private School school;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "grade_id")
+    private Grade grade;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public StudentDto toDto() {
+    public StudentDto toLazyDto() {
         StudentDto dto = new StudentDto();
         dto.setId(getId());
-        dto.setPersonDto(person.toEagerDto());
-        dto.setUserDto(user.toDto());
+        dto.setPersonDto(person.toLazyDto());
+        dto.setAddressDto(address.toLazyDto());
+        dto.setSchoolDto(school.toLazyDto());
+        dto.setGradeDto(grade.toLazyDto());
+        dto.setUserDto(user.toDtoWithPermission());
         return dto;
     }
 
     public static Student toDomain(StudentDto dto) {
-        var student = new Student();
-        student.setId(dto.getId());
-        student.setPerson(Person.toDomain(dto.getPersonDto()));
-        student.setUser(User.toDomain(dto.getUserDto()));
-        return student;
+        var domain = new Student();
+        domain.setId(dto.getId());
+        domain.person = Person.toDomain(dto.getPersonDto());
+        domain.address = Address.toDomain(dto.getAddressDto());
+        domain.school = School.toDomain(dto.getSchoolDto());
+        domain.grade = Grade.toDomain(dto.getGradeDto());
+        domain.user = User.toDomain(dto.getUserDto());
+        return domain;
     }
 }
+
 

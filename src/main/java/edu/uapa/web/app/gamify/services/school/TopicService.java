@@ -1,6 +1,6 @@
 package edu.uapa.web.app.gamify.services.school;
 
-import edu.uapa.web.app.gamify.domains.schools.Topic;
+import edu.uapa.web.app.gamify.domains.gamifies.Topic;
 import edu.uapa.web.app.gamify.repositories.school.TopicRepo;
 import edu.uapa.web.app.gamify.utils.Constants;
 import org.springframework.data.domain.Page;
