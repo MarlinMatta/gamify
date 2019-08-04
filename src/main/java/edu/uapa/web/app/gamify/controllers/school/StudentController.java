@@ -4,6 +4,7 @@ import edu.uapa.web.app.gamify.domains.schools.Student;
 import edu.uapa.web.app.gamify.services.school.StudentService;
 import edu.uapa.web.app.gamify.utils.Urls;
 import edu.utesa.lib.models.dtos.school.StudentDto;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,15 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping(value = Urls.APP_STUDENT)
 public class StudentController {
 
     private final StudentService service;
-
-    public StudentController(StudentService service) {
-        this.service = service;
-    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<StudentDto>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {

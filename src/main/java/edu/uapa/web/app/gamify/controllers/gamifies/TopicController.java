@@ -1,9 +1,10 @@
-package edu.uapa.web.app.gamify.controllers.school;
+package edu.uapa.web.app.gamify.controllers.gamifies;
 
 import edu.uapa.web.app.gamify.domains.gamifies.Topic;
-import edu.uapa.web.app.gamify.services.school.TopicService;
+import edu.uapa.web.app.gamify.services.gamifies.TopicService;
 import edu.uapa.web.app.gamify.utils.Urls;
 import edu.utesa.lib.models.dtos.school.TopicDto;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,15 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping(value = Urls.APP_TOPIC)
 public class TopicController {
 
     private final TopicService service;
-
-    public TopicController(TopicService service) {
-        this.service = service;
-    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<TopicDto>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {

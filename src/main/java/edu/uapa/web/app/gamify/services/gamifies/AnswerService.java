@@ -1,7 +1,8 @@
-package edu.uapa.web.app.gamify.services.school;
+package edu.uapa.web.app.gamify.services.gamifies;
 
-import edu.uapa.web.app.gamify.domains.schools.Grade;
-import edu.uapa.web.app.gamify.repositories.school.GradeRepo;
+import edu.uapa.web.app.gamify.domains.gamifies.Answer;
+import edu.uapa.web.app.gamify.repositories.gamifies.AnswerRepo;
+import edu.uapa.web.app.gamify.services.school.SubjectService;
 import edu.uapa.web.app.gamify.utils.Constants;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,12 +14,11 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class GradeService {
+public class AnswerService {
 
-    private final GradeRepo repository;
-    private final SchoolService schoolService;
-
-    private Grade merge(Grade item, String userName) {
+    private final AnswerRepo repository;
+    
+    private Answer merge(Answer item, String userName) {
         if (item != null) {
             if (repository.existsById(item.getId())) {
                 item.setLastModifiedDate(new Date());
@@ -32,23 +32,20 @@ public class GradeService {
         return null;
     }
 
-    public Grade bootStrap(Grade item) {
-        if (item.getSchool().getId() != null) {
-            item.setSchool(schoolService.bootStrap(item.getSchool()));
-        }
+    public Answer bootStrap(Answer item) {
         return merge(item, Constants.SYSTEM_USER);
     }
 
-    public Page<Grade> findAll(Pageable pageable, String filterValue) {
-        return repository.findAllByNameLikeAndEnabled(pageable, filterValue, true);
+    public Page<Answer> findAll(Pageable pageable, String filterValue) {
+        return repository.findAllByDescriptionLikeAndEnabled(pageable, filterValue, true);
     }
 
-    public List<Grade> findAll() {
+    public List<Answer> findAll() {
         return repository.findAll();
     }
 
     public long count(String filterValue) {
-        return repository.countByNameLikeAndEnabled(filterValue, true);
+        return repository.countByDescriptionLikeAndEnabled(filterValue, true);
     }
 
     public void softDelete(Long id) {

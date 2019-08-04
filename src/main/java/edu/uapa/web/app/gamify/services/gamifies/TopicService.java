@@ -1,7 +1,8 @@
-package edu.uapa.web.app.gamify.services.school;
+package edu.uapa.web.app.gamify.services.gamifies;
 
-import edu.uapa.web.app.gamify.domains.schools.Grade;
-import edu.uapa.web.app.gamify.repositories.school.GradeRepo;
+import edu.uapa.web.app.gamify.domains.gamifies.Topic;
+import edu.uapa.web.app.gamify.repositories.gamifies.TopicRepo;
+import edu.uapa.web.app.gamify.services.school.SubjectService;
 import edu.uapa.web.app.gamify.utils.Constants;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,12 +14,12 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class GradeService {
+public class TopicService {
 
-    private final GradeRepo repository;
-    private final SchoolService schoolService;
+    private final TopicRepo repository;
+    private final SubjectService subjectService;
 
-    private Grade merge(Grade item, String userName) {
+    private Topic merge(Topic item, String userName) {
         if (item != null) {
             if (repository.existsById(item.getId())) {
                 item.setLastModifiedDate(new Date());
@@ -32,18 +33,18 @@ public class GradeService {
         return null;
     }
 
-    public Grade bootStrap(Grade item) {
-        if (item.getSchool().getId() != null) {
-            item.setSchool(schoolService.bootStrap(item.getSchool()));
+    public Topic bootStrap(Topic item) {
+        if (item.getSubject().getId() != null) {
+            item.setSubject(subjectService.bootStrap(item.getSubject()));
         }
         return merge(item, Constants.SYSTEM_USER);
     }
 
-    public Page<Grade> findAll(Pageable pageable, String filterValue) {
+    public Page<Topic> findAll(Pageable pageable, String filterValue) {
         return repository.findAllByNameLikeAndEnabled(pageable, filterValue, true);
     }
 
-    public List<Grade> findAll() {
+    public List<Topic> findAll() {
         return repository.findAll();
     }
 

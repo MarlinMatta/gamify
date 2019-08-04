@@ -4,6 +4,7 @@ import edu.uapa.web.app.gamify.domains.schools.School;
 import edu.uapa.web.app.gamify.repositories.school.SchoolRepo;
 import edu.uapa.web.app.gamify.services.address.AddressService;
 import edu.uapa.web.app.gamify.utils.Constants;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,16 +13,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class SchoolService {
 
     private final SchoolRepo repository;
     private final AddressService addressService;
-
-    public SchoolService(SchoolRepo repository, AddressService addressService) {
-        this.repository = repository;
-        this.addressService = addressService;
-    }
 
     private School merge(School item, String userName) {
         if (item != null) {
