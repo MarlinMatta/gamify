@@ -27,13 +27,15 @@ public class Person extends Auditable {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
-
     @Column(nullable = false)
     private Date birthday;
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private Gender gender;
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private Nationality nationality;
+    @Enumerated(EnumType.ORDINAL)
     private MaritalStatus maritalStatus;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
