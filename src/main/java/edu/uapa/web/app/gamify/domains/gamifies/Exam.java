@@ -13,7 +13,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,19 +42,19 @@ public class Exam extends Auditable {
     private Date toDate;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "exam_problems", joinColumns = {@JoinColumn(name = "exam_id")}, inverseJoinColumns = @JoinColumn(name = "problem_id"))
-    private Set<ProblemDto> problems;
+    private Set<Problem> problems;
 
     public ExamDto toLazyDto() {
         ExamDto dto = new ExamDto();
         dto.setId(getId());
-        dto.setTeacherDto (teacher.toLazyDto());
+        dto.setTeacherDto(teacher.toLazyDto());
         dto.setExamDifficulty(examDifficulty);
         dto.setSubjectDto(subject.toLazyDto());
         dto.setTopicDto(topic.toLazyDto());
         dto.setProblemQuantity(problemQuantity);
         dto.setFromDate(fromDate);
         dto.setToDate(toDate);
-        dto.setProblems(problems);
+        dto.setProblems(problems.stream().map(Problem::toLazyDto).collect(Collectors.toSet()));
         return dto;
     }
 
@@ -66,7 +68,9 @@ public class Exam extends Auditable {
         domain.setProblemQuantity(dto.getProblemQuantity());
         domain.setFromDate(dto.getFromDate());
         domain.setToDate(dto.getToDate());
-        domain.setProblems(dto.getProblems());
+        Set<Problem> problem = new HashSet<>();
+        dto.getProblems().forEach(problemDto -> problem.add(Problem.toDomain(problemDto)));
+        domain.setProblems(problem);
         return domain;
     }
 }
