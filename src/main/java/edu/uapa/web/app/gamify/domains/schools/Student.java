@@ -10,10 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,6 +33,8 @@ public class Student extends Auditable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+    @Column(nullable = false)
+    private int points;
 
     public StudentDto toLazyDto() {
         StudentDto dto = new StudentDto();
@@ -50,6 +49,8 @@ public class Student extends Auditable {
             dto.setGradeDto(grade.toLazyDto());
         if (user != null)
             dto.setUserDto(user.toDtoWithPermission());
+        if (points >= 0)
+            dto.setPoints(points);
         return dto;
     }
 
@@ -61,6 +62,7 @@ public class Student extends Auditable {
         domain.school = School.toDomain(dto.getSchoolDto());
         domain.grade = Grade.toDomain(dto.getGradeDto());
         domain.user = User.toDomain(dto.getUserDto());
+        domain.points = dto.getPoints();
         return domain;
     }
 }
