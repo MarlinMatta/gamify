@@ -28,8 +28,10 @@ public class Subject extends Auditable {
     public SubjectDto toLazyDto() {
         SubjectDto dto = new SubjectDto();
         dto.setId(getId());
-        dto.setTeacherDto(teacher.toLazyDto());
-        dto.setGradeDto(grade.toLazyDto());
+        if (teacher != null)
+            dto.setTeacherDto(teacher.toLazyDto());
+        if (grade != null)
+            dto.setGradeDto(grade.toLazyDto());
         dto.setName(name);
         dto.setDescription(description);
         return dto;
