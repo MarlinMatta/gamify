@@ -3,6 +3,7 @@ package edu.uapa.web.app.gamify.models.enums;
 public enum EnumPermission {
     ROOT(0),
     GAME(1),
+    ADMIN(2),
     SECURITY_MENU(101),
     COMPANY_MENU(102),
 

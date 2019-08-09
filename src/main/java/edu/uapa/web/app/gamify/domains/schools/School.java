@@ -21,7 +21,7 @@ public class School extends Auditable {
     private String name;
     @Column(nullable = false)
     private String district;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address address;
 

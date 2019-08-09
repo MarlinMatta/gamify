@@ -9,6 +9,12 @@ public class SystemPermission {
             case ROOT:
                 name = "ROOT";
                 break;
+            case GAME:
+                name = "GAME";
+                break;
+            case ADMIN:
+                name = "ADMIN";
+                break;
             case SECURITY_MENU:
                 name = "SECURITY_MENU";
                 break;
@@ -185,6 +191,8 @@ public class SystemPermission {
         String description = "";
         switch (enumPermission) {
             case ROOT:
+            case GAME:
+            case ADMIN:
             case SECURITY_MENU:
             case COMPANY_MENU:
             case PARAM:

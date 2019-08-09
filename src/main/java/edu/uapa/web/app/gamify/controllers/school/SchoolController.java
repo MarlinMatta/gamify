@@ -24,7 +24,7 @@ public class SchoolController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<SchoolDto>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
         long start = System.currentTimeMillis();
-        List<SchoolDto> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(School::toLazyDto).collect(Collectors.toList());
+        List<SchoolDto> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(School::toEagerDto).collect(Collectors.toList());
         System.out.println("School Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
