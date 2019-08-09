@@ -29,6 +29,14 @@ public class TopicController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<List<TopicDto>> getBySubject(@RequestParam String topic) {
+        long start = System.currentTimeMillis();
+        List<TopicDto> result = service.findAllBySubject(Integer.parseInt(topic)).stream().map(Topic::toLazyDto).collect(Collectors.toList());
+        System.out.println("Subject Get Total Time: " + (System.currentTimeMillis() - start));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @RequestMapping(value = Urls.COUNT, method = RequestMethod.GET)
     public ResponseEntity<Long> count(@RequestParam String filterValue) {
         long start = System.currentTimeMillis();

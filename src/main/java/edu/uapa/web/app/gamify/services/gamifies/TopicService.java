@@ -52,6 +52,10 @@ public class TopicService {
         return repository.countByNameLikeAndEnabled(filterValue, true);
     }
 
+    public List<Topic> findAllBySubject(long gradeId) {
+        return repository.findAllBySubject_Id(gradeId);
+    }
+
     public void softDelete(Long id) {
         repository.findById(id).ifPresent(item -> {
             item.setEnabled(false);

@@ -29,6 +29,14 @@ public class SubjectController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<List<SubjectDto>> getByGradle(@RequestParam String grade) {
+        long start = System.currentTimeMillis();
+        List<SubjectDto> result = service.findAllByGrade(Integer.parseInt(grade)).stream().map(Subject::toLazyDto).collect(Collectors.toList());
+        System.out.println("Subject Get Total Time: " + (System.currentTimeMillis() - start));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @RequestMapping(value = Urls.COUNT, method = RequestMethod.GET)
     public ResponseEntity<Long> count(@RequestParam String filterValue) {
         long start = System.currentTimeMillis();

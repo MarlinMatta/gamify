@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -50,6 +49,10 @@ public class SubjectService {
 
     public long count(String filterValue) {
         return repository.countByNameLikeAndEnabled(filterValue, true);
+    }
+
+    public List<Subject> findAllByGrade(long gradeId) {
+        return repository.findAllByGrade_Id(gradeId);
     }
 
     public void softDelete(Long id) {
