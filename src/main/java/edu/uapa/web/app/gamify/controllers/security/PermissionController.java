@@ -34,6 +34,18 @@ public class PermissionController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/student", method = RequestMethod.GET)
+    public ResponseEntity<List<PermissionDto>> getStudent() {
+        List<PermissionDto> result = service.findByCode(1).stream().map(Permission::toDto).collect(Collectors.toList());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/teacher", method = RequestMethod.GET)
+    public ResponseEntity<List<PermissionDto>> getTeacher() {
+        List<PermissionDto> result = service.findByCode(2).stream().map(Permission::toDto).collect(Collectors.toList());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public ResponseEntity<List<PermissionGroupDto>> getGroup(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
         long start = System.currentTimeMillis();
