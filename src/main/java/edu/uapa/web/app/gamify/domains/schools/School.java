@@ -30,6 +30,7 @@ public class School extends Auditable {
         dto.setId(getId());
         dto.setName(name);
         dto.setDistrict(district);
+        dto.setAddressDto(address.toLazyDto());
         return dto;
     }
 
