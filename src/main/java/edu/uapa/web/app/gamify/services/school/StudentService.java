@@ -6,6 +6,7 @@ import edu.uapa.web.app.gamify.services.address.AddressService;
 import edu.uapa.web.app.gamify.services.people.PersonService;
 import edu.uapa.web.app.gamify.services.securities.UserService;
 import edu.uapa.web.app.gamify.utils.Constants;
+import edu.utesa.lib.models.dtos.school.StudentDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -60,6 +61,10 @@ public class StudentService {
 
     public Page<Student> findAll(Pageable pageable, String filterValue) {
         return repository.findAllByPersonFirstNameLikeAndEnabled(pageable, filterValue, true);
+    }
+
+    public StudentDto findByUser(Long userId) {
+        return repository.findByUser_Id(userId).map(Student::toLazyDto).orElse(null);
     }
 
     public List<Student> findAll() {
