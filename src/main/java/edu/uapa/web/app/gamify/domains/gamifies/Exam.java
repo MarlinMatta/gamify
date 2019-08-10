@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -54,8 +56,8 @@ public class Exam extends Auditable {
         dto.setSubjectDto(subject.toLazyDto());
         dto.setTopicDto(topic.toLazyDto());
         dto.setProblemQuantity(problemQuantity);
-        dto.setFromDate(fromDate);
-        dto.setToDate(toDate);
+        dto.setFromDate(fromDate.toString());
+        dto.setToDate(toDate.toString());
         dto.setProblems(problems.stream().map(Problem::toLazyDto).collect(Collectors.toSet()));
         dto.setPoints(points);
         return dto;
@@ -69,8 +71,12 @@ public class Exam extends Auditable {
         domain.subject = Subject.toDomain(dto.getSubjectDto());
         domain.topic = Topic.toDomain(dto.getTopicDto());
         domain.setProblemQuantity(dto.getProblemQuantity());
-        domain.setFromDate(dto.getFromDate());
-        domain.setToDate(dto.getToDate());
+        try {
+            domain.setFromDate(new SimpleDateFormat("yyyy-MM-dd").parse(dto.getFromDate()));
+            domain.setToDate(new SimpleDateFormat("yyyy-MM-dd").parse(dto.getToDate()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Set<Problem> problem = new HashSet<>();
         dto.getProblems().forEach(problemDto -> problem.add(Problem.toDomain(problemDto)));
         domain.setProblems(problem);

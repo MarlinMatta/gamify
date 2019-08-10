@@ -37,9 +37,6 @@ public class ExamService {
     }
 
     public Exam bootStrap(Exam item) {
-        if (item.getTeacher().getId() != null) {
-            item.setTeacher(teacherService.bootStrap(item.getTeacher()));
-        }
         if (item.getSubject().getId() != null) {
             item.setSubject(subjectService.bootStrap(item.getSubject()));
         }

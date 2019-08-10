@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 public class Permission extends Auditable {
     @Column(nullable = false, unique = true)
     private int code;
-    @Column(nullable = false, unique = true)
+//    @Column(nullable = false, unique = true)
     private String name;
     private String description;
 
