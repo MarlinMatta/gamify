@@ -41,7 +41,7 @@ public class ProblemController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/exam", method = RequestMethod.GET)
     public ResponseEntity<List<ProblemDto>> getAllByExam(@RequestParam String difficulty, @RequestParam String size,
                                                          @RequestParam String teacherId, @RequestParam String topicId,
                                                          @RequestParam String from, @RequestParam String to) throws ParseException {
