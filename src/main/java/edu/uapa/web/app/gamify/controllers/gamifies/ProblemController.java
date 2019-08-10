@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 public class ProblemController {
 
     private final ProblemService service;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("");
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<ProblemDto>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
@@ -34,6 +37,19 @@ public class ProblemController {
     public ResponseEntity<List<ProblemDto>> getAll(@RequestParam String difficulty, @RequestParam String size) {
         long start = System.currentTimeMillis();
         List<ProblemDto> result = service.findAll(PageRequest.of(0, Integer.parseInt(size)), ExamDifficulty.valueOf(difficulty)).stream().map(Problem::toLazyDto).collect(Collectors.toList());
+        System.out.println("Problem Get Total Time: " + (System.currentTimeMillis() - start));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<List<ProblemDto>> getAllByExam(@RequestParam String difficulty, @RequestParam String size,
+                                                         @RequestParam String teacherId, @RequestParam String topicId,
+                                                         @RequestParam String from, @RequestParam String to) throws ParseException {
+        long start = System.currentTimeMillis();
+        List<ProblemDto> result = service.findAllByExamDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween
+                (PageRequest.of(0, Integer.parseInt(size)), ExamDifficulty.valueOf(difficulty),
+                        Long.parseLong(teacherId), Long.parseLong(topicId), simpleDateFormat.parse(from), simpleDateFormat.parse(to)).stream()
+                .map(Problem::toLazyDto).collect(Collectors.toList());
         System.out.println("Problem Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

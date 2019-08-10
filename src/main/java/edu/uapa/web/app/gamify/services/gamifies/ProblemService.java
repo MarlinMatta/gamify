@@ -45,6 +45,12 @@ public class ProblemService {
         return repository.findAllByExamDifficultyAndEnabled(pageable, difficulty, true);
     }
 
+    public Page<Problem> findAllByExamDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween
+            (Pageable pageable, ExamDifficulty difficulty, Long teacherId, Long topicId, Date from, Date to) {
+        return repository.findAllByExamDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween(pageable, difficulty, teacherId, topicId, true, from, to);
+    }
+
+
     public List<Problem> findAll() {
         return repository.findAll();
     }
