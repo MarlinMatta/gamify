@@ -43,6 +43,8 @@ public class Exam extends Auditable {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "exam_problems", joinColumns = {@JoinColumn(name = "exam_id")}, inverseJoinColumns = @JoinColumn(name = "problem_id"))
     private Set<Problem> problems;
+    @Column(nullable = false)
+    private int points;
 
     public ExamDto toLazyDto() {
         ExamDto dto = new ExamDto();
@@ -55,6 +57,7 @@ public class Exam extends Auditable {
         dto.setFromDate(fromDate);
         dto.setToDate(toDate);
         dto.setProblems(problems.stream().map(Problem::toLazyDto).collect(Collectors.toSet()));
+        dto.setPoints(points);
         return dto;
     }
 
@@ -71,6 +74,7 @@ public class Exam extends Auditable {
         Set<Problem> problem = new HashSet<>();
         dto.getProblems().forEach(problemDto -> problem.add(Problem.toDomain(problemDto)));
         domain.setProblems(problem);
+        domain.setPoints(dto.getPoints());
         return domain;
     }
 }
