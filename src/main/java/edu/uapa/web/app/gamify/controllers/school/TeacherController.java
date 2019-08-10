@@ -29,6 +29,14 @@ public class TeacherController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
+    public ResponseEntity<TeacherDto> getByUser(@RequestParam String userId) {
+        long start = System.currentTimeMillis();
+        TeacherDto result = service.findByUser(Long.parseLong(userId));
+        System.out.println("Student Get Total Time: " + (System.currentTimeMillis() - start));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @RequestMapping(value = Urls.COUNT, method = RequestMethod.GET)
     public ResponseEntity<Long> count(@RequestParam String filterValue) {
         long start = System.currentTimeMillis();
