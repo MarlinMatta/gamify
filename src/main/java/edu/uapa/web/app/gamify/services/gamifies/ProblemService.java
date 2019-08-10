@@ -1,10 +1,9 @@
 package edu.uapa.web.app.gamify.services.gamifies;
 
-import edu.uapa.web.app.gamify.domains.gamifies.Answer;
 import edu.uapa.web.app.gamify.domains.gamifies.Problem;
 import edu.uapa.web.app.gamify.repositories.gamifies.ProblemRepo;
 import edu.uapa.web.app.gamify.utils.Constants;
-import edu.utesa.lib.models.dtos.school.AnswerDto;
+import edu.utesa.lib.models.enums.ExamDifficulty;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +39,10 @@ public class ProblemService {
 
     public Page<Problem> findAll(Pageable pageable, String filterValue) {
         return repository.findAllByQuestionLikeAndEnabled(pageable, filterValue, true);
+    }
+
+    public Page<Problem> findAll(Pageable pageable, ExamDifficulty difficulty) {
+        return repository.findAllByExamDifficultyAndEnabled(pageable, difficulty, true);
     }
 
     public List<Problem> findAll() {

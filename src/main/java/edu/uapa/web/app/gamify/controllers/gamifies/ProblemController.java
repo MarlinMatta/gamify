@@ -4,6 +4,7 @@ import edu.uapa.web.app.gamify.domains.gamifies.Problem;
 import edu.uapa.web.app.gamify.services.gamifies.ProblemService;
 import edu.uapa.web.app.gamify.utils.Urls;
 import edu.utesa.lib.models.dtos.school.ProblemDto;
+import edu.utesa.lib.models.enums.ExamDifficulty;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,14 @@ public class ProblemController {
     public ResponseEntity<List<ProblemDto>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
         long start = System.currentTimeMillis();
         List<ProblemDto> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(Problem::toLazyDto).collect(Collectors.toList());
+        System.out.println("Problem Get Total Time: " + (System.currentTimeMillis() - start));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<List<ProblemDto>> getAll(@RequestParam String difficulty, @RequestParam String size) {
+        long start = System.currentTimeMillis();
+        List<ProblemDto> result = service.findAll(PageRequest.of(0, Integer.parseInt(size)), ExamDifficulty.valueOf(difficulty)).stream().map(Problem::toLazyDto).collect(Collectors.toList());
         System.out.println("Problem Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
