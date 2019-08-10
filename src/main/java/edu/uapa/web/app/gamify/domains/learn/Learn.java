@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "lean")
+@Entity(name = "learn")
 public class Learn extends Auditable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "topic_id")

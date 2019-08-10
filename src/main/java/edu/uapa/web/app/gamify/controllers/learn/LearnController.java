@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = Urls.APP_EXAM)
+@RequestMapping(value = Urls.APP_LEARN)
 public class LearnController {
 
     private final LearnService service;
@@ -27,22 +27,6 @@ public class LearnController {
         System.out.println("Learn Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ResponseEntity<List<LearnDto>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
-//        long start = System.currentTimeMillis();
-//        List<LearnDto> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(Learn::toLazyDto).collect(Collectors.toList());
-//        System.out.println("Learn Get Total Time: " + (System.currentTimeMillis() - start));
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-
-//    @RequestMapping(value = Urls.COUNT, method = RequestMethod.GET)
-//    public ResponseEntity<Long> count(@RequestParam String filterValue) {
-//        long start = System.currentTimeMillis();
-//        Long result = service.count("%" + filterValue + "%");
-//        System.out.println("Learn Count Total Time: " + (System.currentTimeMillis() - start));
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<LearnDto> update(@RequestBody LearnDto dto) {

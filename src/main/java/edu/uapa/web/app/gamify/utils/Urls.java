@@ -29,6 +29,7 @@ public class Urls {
     public static final String APP_ANSWER = APP + "/answers";
     public static final String APP_PROBLEM = APP + "/problems";
     public static final String APP_EXAM = APP + "/exams";
+    public static final String APP_LEARN = APP + "/learn";
 
     public static final String ROOT = "/";
     public static final String UP = "/up";
