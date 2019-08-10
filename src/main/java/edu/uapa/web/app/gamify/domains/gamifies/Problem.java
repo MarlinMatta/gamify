@@ -35,8 +35,7 @@ public class Problem extends Auditable {
     private String incorrectAnswer02;
     @Column(nullable = false)
     private String incorrectAnswer03;
-    @Column(nullable = false)
-    private int points;
+
 
     public ProblemDto toLazyDto() {
         ProblemDto dto = new ProblemDto();
@@ -49,7 +48,6 @@ public class Problem extends Auditable {
         dto.setIncorrectAnswer01(incorrectAnswer01);
         dto.setIncorrectAnswer02(incorrectAnswer02);
         dto.setIncorrectAnswer03(incorrectAnswer03);
-        dto.setPoints(points);
         return dto;
     }
 
@@ -64,7 +62,6 @@ public class Problem extends Auditable {
         domain.setIncorrectAnswer01(dto.getIncorrectAnswer01());
         domain.setIncorrectAnswer02(dto.getIncorrectAnswer02());
         domain.setIncorrectAnswer03(dto.getIncorrectAnswer03());
-        domain.setPoints(dto.getPoints());
         return domain;
     }
 }
