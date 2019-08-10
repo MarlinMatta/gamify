@@ -2,6 +2,8 @@ package edu.uapa.web.app.gamify.services.gamifies;
 
 import edu.uapa.web.app.gamify.domains.gamifies.Exam;
 import edu.uapa.web.app.gamify.repositories.gamifies.ExamRepo;
+import edu.uapa.web.app.gamify.services.school.SubjectService;
+import edu.uapa.web.app.gamify.services.school.TeacherService;
 import edu.uapa.web.app.gamify.utils.Constants;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,9 @@ import java.util.List;
 public class ExamService {
 
     private final ExamRepo repository;
+    private final TeacherService teacherService;
+    private final SubjectService subjectService;
+    private final TopicService topicService;
 
     private Exam merge(Exam item, String userName) {
         if (item != null) {
@@ -32,6 +37,15 @@ public class ExamService {
     }
 
     public Exam bootStrap(Exam item) {
+        if (item.getTeacher().getId() != null) {
+            item.setTeacher(teacherService.bootStrap(item.getTeacher()));
+        }
+        if (item.getSubject().getId() != null) {
+            item.setSubject(subjectService.bootStrap(item.getSubject()));
+        }
+        if (item.getTopic().getId() != null) {
+            item.setTopic(topicService.bootStrap(item.getTopic()));
+        }
         return merge(item, Constants.SYSTEM_USER);
     }
 

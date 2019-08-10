@@ -29,10 +29,18 @@ public class SubjectController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/grade", method = RequestMethod.GET)
     public ResponseEntity<List<SubjectDto>> getByGradle(@RequestParam String grade) {
         long start = System.currentTimeMillis();
         List<SubjectDto> result = service.findAllByGrade(Integer.parseInt(grade)).stream().map(Subject::toLazyDto).collect(Collectors.toList());
+        System.out.println("Subject Get Total Time: " + (System.currentTimeMillis() - start));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/teacher", method = RequestMethod.GET)
+    public ResponseEntity<List<SubjectDto>> getByTeacher(@RequestParam String teacher) {
+        long start = System.currentTimeMillis();
+        List<SubjectDto> result = service.findAllByTeacher(Integer.parseInt(teacher)).stream().map(Subject::toLazyDto).collect(Collectors.toList());
         System.out.println("Subject Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

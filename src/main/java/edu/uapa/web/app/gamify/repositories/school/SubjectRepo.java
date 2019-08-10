@@ -15,4 +15,6 @@ public interface SubjectRepo extends JpaRepository<Subject, Long> {
     long countByNameLikeAndEnabled(String filterValue, boolean enabled);
 
     List<Subject> findAllByGrade_Id(long gradeId);
+
+    List<Subject> findAllByTeacher_Id(long teacherId);
 }

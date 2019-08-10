@@ -55,6 +55,10 @@ public class SubjectService {
         return repository.findAllByGrade_Id(gradeId);
     }
 
+    public List<Subject> findAllByTeacher(long teacherId) {
+        return repository.findAllByTeacher_Id(teacherId);
+    }
+
     public void softDelete(Long id) {
         repository.findById(id).ifPresent(item -> {
             item.setEnabled(false);
