@@ -2,6 +2,7 @@ package edu.uapa.web.app.gamify.controllers.gamifies;
 
 import edu.uapa.web.app.gamify.domains.gamifies.Problem;
 import edu.uapa.web.app.gamify.services.gamifies.ProblemService;
+import edu.uapa.web.app.gamify.utils.Constants;
 import edu.uapa.web.app.gamify.utils.Urls;
 import edu.utesa.lib.models.dtos.school.ProblemDto;
 import edu.utesa.lib.models.enums.ExamDifficulty;
@@ -23,7 +24,6 @@ import java.util.stream.Collectors;
 public class ProblemController {
 
     private final ProblemService service;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("");
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<ProblemDto>> get(@RequestParam String page, @RequestParam String size, @RequestParam String filterValue) {
@@ -48,7 +48,7 @@ public class ProblemController {
         long start = System.currentTimeMillis();
         List<ProblemDto> result = service.findAllByExamDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween
                 (PageRequest.of(0, Integer.parseInt(size)), ExamDifficulty.valueOf(difficulty),
-                        Long.parseLong(teacherId), Long.parseLong(topicId), simpleDateFormat.parse(from), simpleDateFormat.parse(to)).stream()
+                        Long.parseLong(teacherId), Long.parseLong(topicId), Constants.simpleDateFormat.parse(from), Constants.simpleDateFormat.parse(to)).stream()
                 .map(Problem::toLazyDto).collect(Collectors.toList());
         System.out.println("Problem Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
