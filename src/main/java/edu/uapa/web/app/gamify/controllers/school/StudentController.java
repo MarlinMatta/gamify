@@ -37,6 +37,15 @@ public class StudentController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/points", method = RequestMethod.GET)
+    public void setPoint(@RequestParam String point, @RequestParam String userId) {
+        long start = System.currentTimeMillis();
+        Student student = service.findByUserId(Long.parseLong(userId));
+        student.setPoints(student.getPoints() + Integer.parseInt(point));
+        service.bootStrap(student);
+        System.out.println("Student Save point Total Time: " + (System.currentTimeMillis() - start));
+    }
+
     @RequestMapping(value = Urls.COUNT, method = RequestMethod.GET)
     public ResponseEntity<Long> count(@RequestParam String filterValue) {
         long start = System.currentTimeMillis();

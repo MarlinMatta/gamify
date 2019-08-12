@@ -67,6 +67,10 @@ public class StudentService {
         return repository.findByUser_Id(userId).map(Student::toLazyDto).orElse(null);
     }
 
+    public Student findByUserId(Long userId) {
+        return repository.findByUser_Id(userId).orElse(null);
+    }
+
     public List<Student> findAll() {
         return repository.findAll();
     }
