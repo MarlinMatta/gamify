@@ -5,7 +5,8 @@ import edu.uapa.web.app.gamify.domains.schools.Teacher;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
 import edu.utesa.lib.models.dtos.school.ExamDto;
 import edu.utesa.lib.models.dtos.school.ProblemDto;
-import edu.utesa.lib.models.enums.ExamDifficulty;
+import edu.utesa.lib.models.enums.GameDifficulty;
+import edu.utesa.lib.models.enums.GameDifficulty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,7 @@ public class Exam extends Auditable {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
     @Enumerated(EnumType.ORDINAL)
-    private ExamDifficulty examDifficulty;
+    private GameDifficulty gameDifficulty;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
     private Subject subject;
@@ -52,7 +53,7 @@ public class Exam extends Auditable {
         ExamDto dto = new ExamDto();
         dto.setId(getId());
         dto.setTeacherDto(teacher.toLazyDto());
-        dto.setExamDifficulty(examDifficulty);
+        dto.setGameDifficulty(gameDifficulty);
         dto.setSubjectDto(subject.toLazyDto());
         dto.setTopicDto(topic.toLazyDto());
         dto.setProblemQuantity(problemQuantity);
@@ -67,7 +68,7 @@ public class Exam extends Auditable {
         var domain = new Exam();
         domain.setId(dto.getId());
         domain.teacher = Teacher.toDomain(dto.getTeacherDto());
-        domain.setExamDifficulty(dto.getExamDifficulty());
+        domain.setGameDifficulty(dto.getGameDifficulty());
         domain.subject = Subject.toDomain(dto.getSubjectDto());
         domain.topic = Topic.toDomain(dto.getTopicDto());
         domain.setProblemQuantity(dto.getProblemQuantity());

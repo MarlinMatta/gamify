@@ -1,7 +1,7 @@
 package edu.uapa.web.app.gamify.repositories.gamifies;
 
 import edu.uapa.web.app.gamify.domains.gamifies.Problem;
-import edu.utesa.lib.models.enums.ExamDifficulty;
+import edu.utesa.lib.models.enums.GameDifficulty;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,9 +13,9 @@ import java.util.Date;
 public interface ProblemRepo extends JpaRepository<Problem, Long> {
     Page<Problem> findAllByQuestionLikeAndEnabled(Pageable pageable, String filterValue, boolean enabled);
 
-    Page<Problem> findAllByExamDifficultyAndEnabled(Pageable pageable, ExamDifficulty difficulty, boolean enabled);
+    Page<Problem> findAllByGameDifficultyAndEnabled(Pageable pageable, GameDifficulty difficulty, boolean enabled);
 
-    Page<Problem> findAllByExamDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween(Pageable pageable, ExamDifficulty difficulty, Long teacherId, Long topicId, boolean enabled, Date from, Date to);
+    Page<Problem> findAllByGameDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween(Pageable pageable, GameDifficulty difficulty, Long teacherId, Long topicId, boolean enabled, Date from, Date to);
 
     long countByQuestionLikeAndEnabled(String filterValue, boolean enabled);
 }

@@ -3,7 +3,7 @@ package edu.uapa.web.app.gamify.services.gamifies;
 import edu.uapa.web.app.gamify.domains.gamifies.Problem;
 import edu.uapa.web.app.gamify.repositories.gamifies.ProblemRepo;
 import edu.uapa.web.app.gamify.utils.Constants;
-import edu.utesa.lib.models.enums.ExamDifficulty;
+import edu.utesa.lib.models.enums.GameDifficulty;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,13 +41,13 @@ public class ProblemService {
         return repository.findAllByQuestionLikeAndEnabled(pageable, filterValue, true);
     }
 
-    public Page<Problem> findAll(Pageable pageable, ExamDifficulty difficulty) {
-        return repository.findAllByExamDifficultyAndEnabled(pageable, difficulty, true);
+    public Page<Problem> findAll(Pageable pageable, GameDifficulty difficulty) {
+        return repository.findAllByGameDifficultyAndEnabled(pageable, difficulty, true);
     }
 
-    public Page<Problem> findAllByExamDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween
-            (Pageable pageable, ExamDifficulty difficulty, Long teacherId, Long topicId, Date from, Date to) {
-        return repository.findAllByExamDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween(pageable, difficulty, teacherId, topicId, true, from, to);
+    public Page<Problem> findAllByGameDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween
+            (Pageable pageable, GameDifficulty difficulty, Long teacherId, Long topicId, Date from, Date to) {
+        return repository.findAllByGameDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween(pageable, difficulty, teacherId, topicId, true, from, to);
     }
 
 

@@ -5,7 +5,7 @@ import edu.uapa.web.app.gamify.services.gamifies.ProblemService;
 import edu.uapa.web.app.gamify.utils.Constants;
 import edu.uapa.web.app.gamify.utils.Urls;
 import edu.utesa.lib.models.dtos.school.ProblemDto;
-import edu.utesa.lib.models.enums.ExamDifficulty;
+import edu.utesa.lib.models.enums.GameDifficulty;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,7 @@ public class ProblemController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<ProblemDto>> getAll(@RequestParam String difficulty, @RequestParam String size) {
         long start = System.currentTimeMillis();
-        List<ProblemDto> result = service.findAll(PageRequest.of(0, Integer.parseInt(size)), ExamDifficulty.valueOf(difficulty)).stream().map(Problem::toLazyDto).collect(Collectors.toList());
+        List<ProblemDto> result = service.findAll(PageRequest.of(0, Integer.parseInt(size)), GameDifficulty.valueOf(difficulty)).stream().map(Problem::toLazyDto).collect(Collectors.toList());
         System.out.println("Problem Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -46,8 +46,8 @@ public class ProblemController {
                                                          @RequestParam String teacherId, @RequestParam String topicId,
                                                          @RequestParam String from, @RequestParam String to) throws ParseException {
         long start = System.currentTimeMillis();
-        List<ProblemDto> result = service.findAllByExamDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween
-                (PageRequest.of(0, Integer.parseInt(size)), ExamDifficulty.valueOf(difficulty),
+        List<ProblemDto> result = service.findAllByGameDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween
+                (PageRequest.of(0, Integer.parseInt(size)), GameDifficulty.valueOf(difficulty),
                         Long.parseLong(teacherId), Long.parseLong(topicId), Constants.simpleDateFormat.parse(from), Constants.simpleDateFormat.parse(to)).stream()
                 .map(Problem::toLazyDto).collect(Collectors.toList());
         System.out.println("Problem Get Total Time: " + (System.currentTimeMillis() - start));

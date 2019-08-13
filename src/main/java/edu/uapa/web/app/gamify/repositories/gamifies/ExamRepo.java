@@ -1,7 +1,7 @@
 package edu.uapa.web.app.gamify.repositories.gamifies;
 
 import edu.uapa.web.app.gamify.domains.gamifies.Exam;
-import edu.utesa.lib.models.enums.ExamDifficulty;
+import edu.utesa.lib.models.enums.GameDifficulty;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +16,5 @@ public interface ExamRepo extends JpaRepository<Exam, Long> {
 
     long countBySubject_NameLikeAndEnabled(String filterValue, boolean enabled);
 
-    List<Exam> findAllByExamDifficultyAndSubject_IdAndTopic_IdAndCreatedDateBetween(ExamDifficulty difficulty, long subjectId, long topicId, Date from, Date to);
+    List<Exam> findAllByGameDifficultyAndSubject_IdAndTopic_IdAndCreatedDateBetween(GameDifficulty difficulty, long subjectId, long topicId, Date from, Date to);
 }

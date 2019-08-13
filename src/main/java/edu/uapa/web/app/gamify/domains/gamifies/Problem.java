@@ -3,7 +3,7 @@ package edu.uapa.web.app.gamify.domains.gamifies;
 import edu.uapa.web.app.gamify.domains.schools.Teacher;
 import edu.uapa.web.app.gamify.models.abstracts.Auditable;
 import edu.utesa.lib.models.dtos.school.ProblemDto;
-import edu.utesa.lib.models.enums.ExamDifficulty;
+import edu.utesa.lib.models.enums.GameDifficulty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,10 +24,10 @@ public class Problem extends Auditable {
     @JoinColumn(name = "topic_id")
     private Topic topic;
     @Enumerated(EnumType.ORDINAL)
-    private ExamDifficulty examDifficulty;
+    private GameDifficulty gameDifficulty;
     @Column(nullable = false)
     private String question;
-    private Double point;
+    private Double points;
     @Column(nullable = false)
     private String correctAnswer;
     @Column(nullable = false)
@@ -43,9 +43,9 @@ public class Problem extends Auditable {
         dto.setId(getId());
         dto.setTeacherDto(teacher.toLazyDto());
         dto.setTopicDto(topic.toLazyDto());
-        dto.setExamDifficulty(examDifficulty);
+        dto.setGameDifficulty(gameDifficulty);
         dto.setQuestion(question);
-        dto.setPoint(point);
+        dto.setPoint(points);
         dto.setCorrectAnswer(correctAnswer);
         dto.setIncorrectAnswer01(incorrectAnswer01);
         dto.setIncorrectAnswer02(incorrectAnswer02);
@@ -58,9 +58,9 @@ public class Problem extends Auditable {
         domain.setId(dto.getId());
         domain.teacher = Teacher.toDomain(dto.getTeacherDto());
         domain.topic = Topic.toDomain(dto.getTopicDto());
-        domain.setExamDifficulty(dto.getExamDifficulty());
+        domain.setGameDifficulty(dto.getGameDifficulty());
         domain.setQuestion(dto.getQuestion());
-        domain.setPoint(dto.getPoint());
+        domain.setPoints(dto.getPoint());
         domain.setCorrectAnswer(dto.getCorrectAnswer());
         domain.setIncorrectAnswer01(dto.getIncorrectAnswer01());
         domain.setIncorrectAnswer02(dto.getIncorrectAnswer02());
