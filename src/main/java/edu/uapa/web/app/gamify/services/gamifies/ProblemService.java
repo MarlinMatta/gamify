@@ -41,8 +41,8 @@ public class ProblemService {
         return repository.findAllByQuestionLikeAndEnabled(pageable, filterValue, true);
     }
 
-    public Page<Problem> findAll(Pageable pageable, GameDifficulty difficulty) {
-        return repository.findAllByGameDifficultyAndEnabled(pageable, difficulty, true);
+    public Page<Problem> findAll(Pageable pageable, GameDifficulty difficulty, Long topicId) {
+        return repository.findAllByGameDifficultyAndTopic_IdAndEnabled(pageable, difficulty, topicId, true);
     }
 
     public Page<Problem> findAllByGameDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween

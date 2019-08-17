@@ -13,7 +13,7 @@ import java.util.Date;
 public interface ProblemRepo extends JpaRepository<Problem, Long> {
     Page<Problem> findAllByQuestionLikeAndEnabled(Pageable pageable, String filterValue, boolean enabled);
 
-    Page<Problem> findAllByGameDifficultyAndEnabled(Pageable pageable, GameDifficulty difficulty, boolean enabled);
+    Page<Problem> findAllByGameDifficultyAndTopic_IdAndEnabled(Pageable pageable, GameDifficulty difficulty, Long topicId, boolean enabled);
 
     Page<Problem> findAllByGameDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween(Pageable pageable, GameDifficulty difficulty, Long teacherId, Long topicId, boolean enabled, Date from, Date to);
 

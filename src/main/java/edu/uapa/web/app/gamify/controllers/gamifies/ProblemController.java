@@ -34,9 +34,9 @@ public class ProblemController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<List<ProblemDto>> getAll(@RequestParam String difficulty, @RequestParam String size) {
+    public ResponseEntity<List<ProblemDto>> getAll(@RequestParam String difficulty, @RequestParam String topicId, @RequestParam String size) {
         long start = System.currentTimeMillis();
-        List<ProblemDto> result = service.findAll(PageRequest.of(0, Integer.parseInt(size)), GameDifficulty.valueOf(difficulty)).stream().map(Problem::toLazyDto).collect(Collectors.toList());
+        List<ProblemDto> result = service.findAll(PageRequest.of(0, Integer.parseInt(size)), GameDifficulty.valueOf(difficulty), Long.parseLong(topicId)).stream().map(Problem::toLazyDto).collect(Collectors.toList());
         System.out.println("Problem Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
