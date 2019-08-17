@@ -50,7 +50,6 @@ public class ProblemService {
         return repository.findAllByGameDifficultyAndTeacher_IdAndTopic_IdAndEnabledAndCreatedDateBetween(pageable, difficulty, teacherId, topicId, true, from, to);
     }
 
-
     public List<Problem> findAll() {
         return repository.findAll();
     }

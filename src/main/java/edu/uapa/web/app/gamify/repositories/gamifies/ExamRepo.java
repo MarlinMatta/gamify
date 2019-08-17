@@ -14,7 +14,13 @@ import java.util.List;
 public interface ExamRepo extends JpaRepository<Exam, Long> {
     Page<Exam> findAllBySubject_NameLikeAndEnabled(Pageable pageable, String filterValue, boolean enabled);
 
+    Exam findByIdAndEnabled(Long id, boolean enabled);
+
     long countBySubject_NameLikeAndEnabled(String filterValue, boolean enabled);
 
     List<Exam> findAllByGameDifficultyAndSubject_IdAndTopic_IdAndCreatedDateBetween(GameDifficulty difficulty, long subjectId, long topicId, Date from, Date to);
+
+    List<Exam> findAllByGameDifficultyAndSubject_IdAndTopic_IdAndEnabled(GameDifficulty difficulty, Long subjectId, Long topicId, boolean enabled);
+
+    List<Exam> findAllBySubject_IdAndTopic_IdAndEnabled(Long subjectId, Long topicId, boolean enabled);
 }

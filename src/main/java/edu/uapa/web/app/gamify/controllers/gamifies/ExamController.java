@@ -1,9 +1,14 @@
 package edu.uapa.web.app.gamify.controllers.gamifies;
 
 import edu.uapa.web.app.gamify.domains.gamifies.Exam;
+import edu.uapa.web.app.gamify.domains.gamifies.Problem;
 import edu.uapa.web.app.gamify.services.gamifies.ExamService;
+import edu.uapa.web.app.gamify.utils.Constants;
 import edu.uapa.web.app.gamify.utils.Urls;
 import edu.utesa.lib.models.dtos.school.ExamDto;
+import edu.utesa.lib.models.dtos.school.ProblemDto;
+import edu.utesa.lib.models.dtos.school.TeacherDto;
+import edu.utesa.lib.models.enums.GameDifficulty;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -11,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +32,14 @@ public class ExamController {
         long start = System.currentTimeMillis();
         List<ExamDto> result = service.findAll(PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), "%" + filterValue + "%").stream().map(Exam::toLazyDto).collect(Collectors.toList());
         System.out.println("Exam Get Total Time: " + (System.currentTimeMillis() - start));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/one", method = RequestMethod.GET)
+    public ResponseEntity<ExamDto> getById(@RequestParam String id) {
+        long start = System.currentTimeMillis();
+        ExamDto result = service.findById(Long.parseLong(id)).toLazyDto();
+        System.out.println("Student Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -61,7 +75,17 @@ public class ExamController {
     public ResponseEntity<List<ExamDto>> getAll() {
         long start = System.currentTimeMillis();
         List<ExamDto> result = service.findAll().stream().map(Exam::toLazyDto).collect(Collectors.toList());
-        System.out.println("School Get Total Time: " + (System.currentTimeMillis() - start));
+        System.out.println("Exam Get Total Time: " + (System.currentTimeMillis() - start));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/filtered", method = RequestMethod.GET)
+    public ResponseEntity<List<ExamDto>> getAllFiltered(@RequestParam String subjectId,
+                                                        @RequestParam String topicId) {
+        long start = System.currentTimeMillis();
+        List<ExamDto> result = service.findAllFiltered(Long.parseLong(subjectId),
+                Long.parseLong(topicId)).stream().map(Exam::toLazyDto).collect(Collectors.toList());
+        System.out.println("Exam Get Total Time: " + (System.currentTimeMillis() - start));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

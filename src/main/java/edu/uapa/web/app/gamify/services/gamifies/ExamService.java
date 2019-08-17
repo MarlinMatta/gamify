@@ -5,6 +5,7 @@ import edu.uapa.web.app.gamify.repositories.gamifies.ExamRepo;
 import edu.uapa.web.app.gamify.services.school.SubjectService;
 import edu.uapa.web.app.gamify.services.school.TeacherService;
 import edu.uapa.web.app.gamify.utils.Constants;
+import edu.utesa.lib.models.enums.GameDifficulty;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,6 +49,14 @@ public class ExamService {
 
     public Page<Exam> findAll(Pageable pageable, String filterValue) {
         return repository.findAllBySubject_NameLikeAndEnabled(pageable, filterValue, true);
+    }
+
+    public Exam findById(Long id) {
+        return repository.findByIdAndEnabled(id, true);
+    }
+
+    public List<Exam> findAllFiltered(Long subjectId, Long topicId) {
+        return repository.findAllBySubject_IdAndTopic_IdAndEnabled(subjectId, topicId, true);
     }
 
     public List<Exam> findAll() {
